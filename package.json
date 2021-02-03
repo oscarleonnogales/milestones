@@ -1,0 +1,25 @@
+{
+	"name": "blogsite",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"devstart": "nodemon server.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/oscarleonnogales/blogsite.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/oscarleonnogales/blogsite/issues"
+	},
+	"homepage": "https://github.com/oscarleonnogales/blogsite#readme",
+	"dependencies": {
+		"ejs": "^3.1.5",
+		"express": "^4.17.1",
+		"mongoose": "^5.11.15"
+	}
+}
