@@ -24,6 +24,14 @@ app.get('/', async (req, res) => {
 	});
 });
 
+app.get('/login', (req, res) => {
+	res.render('users/login');
+});
+
+app.get('/signup', (req, res) => {
+	res.render('users/signup');
+});
+
 app.use('/articles', articleRouter);
 app.use('/users', userRouter);
 

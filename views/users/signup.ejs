@@ -13,9 +13,9 @@
 		<title>Signup!</title>
 	</head>
 	<body>
-		<div class="container">
-			<h2>Signup Today</h2>
-			<form action="/users" method="POST">
+		<h2 class="text-center mt-3">Signup Today</h2>
+		<div class="container d-flex justify-content-center">
+			<form action="/users" method="POST" class="w-50">
 				<div class="form-group">
 					<label for="username">Username</label>
 					<input required type="text" id="username" name="username" class="form-control" />
@@ -28,8 +28,14 @@
 					<label for="confirmPassword">Confirm Password</label>
 					<input required type="text" id="confirmPassword" name="confirmPassword" class="form-control" />
 				</div>
-
-				<button class="btn-primary btn mt-4" type="submit">Sign Up</button>
+				<div class="container d-flex justify-content-center">
+					<a href="/" class="btn btn-secondary mt-4">Cancel</a>
+					<div style="width: 1rem"></div>
+					<button class="btn-primary btn mt-4" type="submit">Sign Up</button>
+				</div>
+				<div class="container d-flex justify-content-center">
+					<a href="/login" class="d-inline-block">Already a member? Sign In</a>
+				</div>
 			</form>
 		</div>
 	</body>
