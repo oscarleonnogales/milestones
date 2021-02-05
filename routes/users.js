@@ -19,18 +19,17 @@ router.post('/signup', async (req, res) => {
 		const confirmPasswordInput = req.body.confirmPassword;
 		console.log(req.body.username, passwordInput, confirmPasswordInput);
 
-		// const isUsernameUnique = await validateUsername(req.body.username);
-		// if (!isUsernameUnique) throw new Error('Username is already taken');
 		if (!comparePasswordInputs(passwordInput, confirmPasswordInput)) throw new Error('Passwords do not match');
+		const isUsernameUnique = await validateUsername(req.body.username);
+		if (!isUsernameUnique) throw new Error('Username is already taken');
 
-		//Do this after confirming that the passwords match. Otherwise we're awaiting for no reason
 		const hashedPassword = await bcrypt.hash(passwordInput, 10);
 
 		// Username is unique, and passwords match. So go ahead and save a new user
 		user.password = hashedPassword;
-		console.log(user); //remove for production
+		console.log(user);
 		await user.save();
-		res.redirect('/'); // pass in the logged in user
+		res.redirect('/');
 	} catch (error) {
 		console.error(error);
 		res.render('users/signup', { user: user, error: error });
@@ -47,13 +46,7 @@ function comparePasswordInputs(firstInput, secondInput) {
 
 async function validateUsername(newUsername) {
 	const existingUser = await User.findOne({ username: newUsername });
-	if (existingUser != null) {
-		// means there is already an existing username with that username
-		// do not validate. return false
-		console.log('already an existing user');
-		return false;
-	}
-	return existingUser != null;
+	return existingUser ? false : true;
 }
 
 module.exports = router;

@@ -5,7 +5,7 @@ POST http://localhost:5000/users/signup
 Content-Type: application/json
 
 {
-    "username": "cgro",
-    "password": "password",
-    "confirmPassword": "Password"
+    "username": "nopal",
+    "password": "Password",
+    "confirmPassword": "password"
 }
