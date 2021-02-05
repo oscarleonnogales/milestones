@@ -37,7 +37,18 @@ router.post('/signup', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-	res.redirect('/');
+	const user = await User.findOne({ username: req.body.username });
+	if (user) {
+		try {
+			if (await bcrypt.compare(req.body.password, user.password)) {
+				res.send(`${user.username} is now logged in`);
+			} else res.send('Incorrect password');
+		} catch (error) {
+			res.redirect('/');
+		}
+	} else {
+		return res.status(400).send('Cannot find user');
+	}
 });
 
 function comparePasswordInputs(firstInput, secondInput) {
