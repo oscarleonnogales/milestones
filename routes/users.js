@@ -9,31 +9,31 @@ router.get('/', async (req, res) => {
 });
 
 // Creating a new user
-router.post('/', async (req, res) => {
+router.post('/signup', async (req, res) => {
+	let user = new User({
+		username: req.body.username,
+		password: req.body.password,
+	});
 	try {
-		const username = req.body.username;
 		const passwordInput = req.body.password;
-		const passwordConfirmInput = req.body.confirmPassword;
-		console.log(username, passwordInput, passwordConfirmInput);
+		const confirmPasswordInput = req.body.confirmPassword;
+		console.log(req.body.username, passwordInput, confirmPasswordInput);
 
-		// const isUsernameUnique = await validateUsername(username);
-		// if (!isUsernameUnique) throw new Error('Username is taken');
-		// if (!confirmPassword(passwordInput, passwordConfirmInput)) throw new Error('Passowrds do not match');
+		// const isUsernameUnique = await validateUsername(req.body.username);
+		// if (!isUsernameUnique) throw new Error('Username is already taken');
+		if (!comparePasswordInputs(passwordInput, confirmPasswordInput)) throw new Error('Passwords do not match');
 
 		//Do this after confirming that the passwords match. Otherwise we're awaiting for no reason
-		const hashedPassword = await bcrypt.hash(req.body.password, 10);
+		const hashedPassword = await bcrypt.hash(passwordInput, 10);
 
-		const user = new User({
-			username: username,
-			password: hashedPassword,
-		});
-		console.log(user);
-
+		// Username is unique, and passwords match. So go ahead and save a new user
+		user.password = hashedPassword;
+		console.log(user); //remove for production
 		await user.save();
-		res.redirect('/');
+		res.redirect('/'); // pass in the logged in user
 	} catch (error) {
 		console.error(error);
-		// res.redirect('/users');
+		res.render('users/signup', { user: user, error: error });
 	}
 });
 
@@ -41,7 +41,7 @@ router.post('/login', async (req, res) => {
 	res.redirect('/');
 });
 
-function confirmPassword(firstInput, secondInput) {
+function comparePasswordInputs(firstInput, secondInput) {
 	return firstInput === secondInput;
 }
 

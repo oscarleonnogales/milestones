@@ -1,4 +1,11 @@
+GET http://localhost:5000/signup
+###
 
+POST http://localhost:5000/users/signup
+Content-Type: application/json
 
-
-POST http://localhost:5000/users/login
+{
+    "username": "cgro",
+    "password": "password",
+    "confirmPassword": "Password"
+}
