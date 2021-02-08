@@ -21,7 +21,7 @@ mongoose.connect('mongodb://localhost/blogsite', {
 
 app.get('/', async (req, res) => {
 	const articles = await Article.find().sort({ createdAt: 'desc' });
-	res.render('articles/index', {
+	res.render('index', {
 		articles: articles,
 	});
 });
