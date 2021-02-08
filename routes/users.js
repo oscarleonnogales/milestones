@@ -36,18 +36,19 @@ router.post('/signup', async (req, res) => {
 	}
 });
 
+// Logging in an existing user
 router.post('/login', async (req, res) => {
 	const user = await User.findOne({ username: req.body.username });
 	if (user) {
 		try {
 			if (await bcrypt.compare(req.body.password, user.password)) {
 				res.send(`${user.username} is now logged in`);
-			} else res.send('Incorrect password');
+			} else throw new Error('Invalid password');
 		} catch (error) {
-			res.redirect('/');
+			res.render('users/login', { user: user, error: error });
 		}
 	} else {
-		return res.status(400).send('Cannot find user');
+		res.render('users/login', { user: new User(), error: new Error('Cannot find user') });
 	}
 });
 
