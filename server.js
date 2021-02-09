@@ -74,6 +74,7 @@ mongoose.connect('mongodb://localhost/blogsite', {
 //homepage with all posts
 app.get('/', async (req, res) => {
 	const posts = await Post.find().sort({ createdAt: 'desc' }).populate('author');
+	res.status(200);
 	res.render('index', {
 		user: req.user,
 		posts: posts,
@@ -82,6 +83,7 @@ app.get('/', async (req, res) => {
 
 //login page
 app.get('/login', checkNotAuthenticated, (req, res) => {
+	res.status(200);
 	res.render('users/login', { user: new User(), error: null, message: null });
 });
 
@@ -96,11 +98,13 @@ app.post(
 
 app.delete('/logout', (req, res) => {
 	req.logOut();
+	res.status(200);
 	res.redirect('/');
 });
 
 //signup page
 app.get('/signup', checkNotAuthenticated, (req, res) => {
+	res.status(200);
 	res.render('users/signup', { user: new User(), error: null });
 });
 

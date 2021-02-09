@@ -12,10 +12,12 @@ router.get('/:username', async (req, res) => {
 	let user;
 	try {
 		user = await User.findOne({ username: req.params.username }).populate('posts');
-		if (user) res.send(user);
-		// if (user) res.render('users/profile', { user: user });
-		else throw new Error("User doesn't exist");
+		if (user) {
+			res.status(200);
+			res.render('users/profile', { user: user });
+		} else throw new Error("User doesn't exist");
 	} catch (error) {
+		res.status(404);
 		res.render('404', { error: error });
 	}
 });
@@ -38,8 +40,10 @@ router.post('/signup', async (req, res) => {
 
 		user.password = hashedPassword;
 		await user.save();
+		res.status(201);
 		res.render('users/login', { user: user, error: null, message: 'Success! Please log in to continue' });
 	} catch (error) {
+		res.status(400);
 		res.render('users/signup', { user: user, error: error });
 	}
 });
