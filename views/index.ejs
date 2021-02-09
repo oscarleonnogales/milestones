@@ -17,7 +17,7 @@
 			<h1 class="mb-4">Blog posts</h1>
 			<% if(user) { %>
 			<div class="logged-in-user-container">
-				<a href="/users/<%=user.slug%>"><%=user.username%></a>
+				<a href="/users/<%=user.username%>"><%=user.username%></a>
 				<form action="/logout?_method=DELETE" method="POST">
 					<button type="submit" class="btn btn-danger">Log Out</button>
 				</form>
@@ -34,8 +34,9 @@
 				<div class="card-body">
 					<h4 class="card-title"><%=post.title %></h4>
 					<div class="card-subtitle text-muted mb-2"><%=post.createdAt.toLocaleDateString() %></div>
-					<% console.log('IN HTML') %> <% console.log(post) %> <% console.log(post.author) %>
-					<!-- <div class="card-subtitle text-muted mb-2">by <%=post.author %></div> -->
+					<div class="card-subtitle text-muted mb-2">
+						by <a href="/users/<%= post.author.username %>"><%= post.author.username %></a>
+					</div>
 					<div class="card-text mb-2"><%=post.description %></div>
 
 					<a href="posts/<%= post.slug %>" class="btn btn-primary">Read More</a>

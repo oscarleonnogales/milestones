@@ -30,17 +30,18 @@ router.get('/:slug', async (req, res) => {
 });
 
 router.post('/', checkAuthenticated, async (req, res) => {
+	const user = req.user;
 	let post = new Post({
 		title: req.body.title,
 		description: req.body.description,
 		markdown: req.body.markdown,
-		author: req.user,
+		author: user,
 	});
 
 	try {
 		post = await post.save();
-		console.log('NEW post CREATED');
-		console.log(post);
+		user.posts.push(post);
+		await user.save();
 		res.redirect(`/posts/${post.slug}`);
 	} catch {
 		res.render('posts/new', { post: post });

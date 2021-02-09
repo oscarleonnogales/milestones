@@ -82,9 +82,7 @@ mongoose.connect('mongodb://localhost/blogsite', {
 
 //homepage with all posts
 app.get('/', async (req, res) => {
-	const posts = await Post.find().sort({ createdAt: 'desc' });
-	console.log('IN SERVER');
-	posts.forEach((post) => console.log(post));
+	const posts = await Post.find().sort({ createdAt: 'desc' }).populate('author');
 	res.render('index', {
 		user: req.user,
 		posts: posts,

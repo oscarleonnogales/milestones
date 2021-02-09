@@ -8,6 +8,18 @@ router.get('/', async (req, res) => {
 	res.render('users');
 });
 
+router.get('/:username', async (req, res) => {
+	let user;
+	try {
+		user = await User.findOne({ username: req.params.username }).populate('posts');
+		if (user) res.send(user);
+		// if (user) res.render('users/profile', { user: user });
+		else throw new Error("User doesn't exist");
+	} catch (error) {
+		res.render('404', { error: error });
+	}
+});
+
 // Creating a new user
 router.post('/signup', async (req, res) => {
 	let user = new User({
@@ -17,7 +29,6 @@ router.post('/signup', async (req, res) => {
 	try {
 		const passwordInput = req.body.password;
 		const confirmPasswordInput = req.body.confirmPassword;
-		console.log(req.body.username, passwordInput, confirmPasswordInput);
 
 		if (!comparePasswordInputs(passwordInput, confirmPasswordInput)) throw new Error('Passwords do not match');
 		const isUsernameUnique = await validateUsername(req.body.username);
@@ -26,11 +37,9 @@ router.post('/signup', async (req, res) => {
 		const hashedPassword = await bcrypt.hash(passwordInput, 10);
 
 		user.password = hashedPassword;
-		console.log(user);
 		await user.save();
 		res.render('users/login', { user: user, error: null, message: 'Success! Please log in to continue' });
 	} catch (error) {
-		console.error(error);
 		res.render('users/signup', { user: user, error: error });
 	}
 });
