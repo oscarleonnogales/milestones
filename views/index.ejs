@@ -14,23 +14,33 @@
 	</head>
 	<body>
 		<div class="container">
-			<h1 class="mb-4">Blog Articles</h1>
+			<h1 class="mb-4">Blog posts</h1>
+			<% if(user) { %>
+			<div class="logged-in-user-container">
+				<a href="/users/<%=user.slug%>"><%=user.username%></a>
+				<form action="/logout?_method=DELETE" method="POST">
+					<button type="submit" class="btn btn-danger">Log Out</button>
+				</form>
+			</div>
+			<% } %>
 			<div class="container">
 				<a href="/signup" class="btn btn-primary">Sign Up</a>
 				<a href="/login" class="btn btn-secondary">Log In</a>
 			</div>
-			<a href="/articles/new" class="btn btn-success">New Article</a>
+			<a href="/posts/new" class="btn btn-success">New post</a>
 
-			<% articles.forEach(article => { %>
+			<% posts.forEach(post => { %>
 			<div class="card mt-4">
 				<div class="card-body">
-					<h4 class="card-title"><%=article.title %></h4>
-					<div class="card-subtitle text-muted mb-2"><%=article.createdAt.toLocaleDateString() %></div>
-					<div class="card-text mb-2"><%=article.description %></div>
+					<h4 class="card-title"><%=post.title %></h4>
+					<div class="card-subtitle text-muted mb-2"><%=post.createdAt.toLocaleDateString() %></div>
+					<% console.log('IN HTML') %> <% console.log(post) %> <% console.log(post.author) %>
+					<!-- <div class="card-subtitle text-muted mb-2">by <%=post.author %></div> -->
+					<div class="card-text mb-2"><%=post.description %></div>
 
-					<a href="articles/<%= article.slug %>" class="btn btn-primary">Read More</a>
-					<a href="articles/edit/<%= article.id %>" class="btn btn-info">Edit</a>
-					<form method="POST" action="/articles/<%= article.id %>?_method=DELETE" class="d-inline">
+					<a href="posts/<%= post.slug %>" class="btn btn-primary">Read More</a>
+					<a href="posts/edit/<%= post.id %>" class="btn btn-info">Edit</a>
+					<form method="POST" action="/posts/<%= post.id %>?_method=DELETE" class="d-inline">
 						<button class="btn-danger btn" type="submit">Delete</button>
 					</form>
 				</div>

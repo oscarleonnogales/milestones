@@ -16,12 +16,16 @@
 		<h2 class="text-center mt-3">Log In</h2>
 		<% if(error != null) { %>
 		<div class="d-flex justify-content-center">
-			<div class="alert alert-danger"><%=error %></div>
+			<div class="alert alert-danger"><%= error %></div>
+		</div>
+		<% } else if(message != null) {%>
+		<div class="d-flex justify-content-center">
+			<div class="alert alert-success"><%= message %></div>
 		</div>
 		<% } %>
 		<div class="text-danger text-center"></div>
 		<div class="container d-flex justify-content-center">
-			<form action="/users/login" method="POST" class="w-50">
+			<form action="/login" method="POST" class="w-50">
 				<div class="form-group">
 					<label for="username">Username</label>
 					<input required type="text" id="username" name="username" class="form-control" value="<%= user.username %>" />

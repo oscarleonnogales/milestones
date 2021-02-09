@@ -25,30 +25,13 @@ router.post('/signup', async (req, res) => {
 
 		const hashedPassword = await bcrypt.hash(passwordInput, 10);
 
-		// Username is unique, and passwords match. So go ahead and save a new user
 		user.password = hashedPassword;
 		console.log(user);
 		await user.save();
-		res.redirect('/');
+		res.render('users/login', { user: user, error: null, message: 'Success! Please log in to continue' });
 	} catch (error) {
 		console.error(error);
 		res.render('users/signup', { user: user, error: error });
-	}
-});
-
-// Logging in an existing user
-router.post('/login', async (req, res) => {
-	const user = await User.findOne({ username: req.body.username });
-	if (user) {
-		try {
-			if (await bcrypt.compare(req.body.password, user.password)) {
-				res.send(`${user.username} is now logged in`);
-			} else throw new Error('Invalid password');
-		} catch (error) {
-			res.render('users/login', { user: user, error: error });
-		}
-	} else {
-		res.render('users/login', { user: new User(), error: new Error('Cannot find user') });
 	}
 });
 

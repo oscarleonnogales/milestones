@@ -10,16 +10,12 @@
 			integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
 			crossorigin="anonymous"
 		/>
-		<title>Blogsite - <%= article.title %></title>
+		<title>Edit</title>
 	</head>
 	<body>
 		<div class="container">
-			<h1 class="mb-1"><%=article.title %></h1>
-			<div class="text-muted mb-2"><%=article.createdAt.toLocaleDateString() %></div>
-			<a href="/" class="btn btn-secondary">All Articles</a>
-			<a href="/articles/edit/<%=article.id %>" class="btn btn-info">Edit</a>
-
-			<div><%- article.sanitizedHTML %></div>
+			<h1 class="mb-4">Edit Post</h1>
+			<form action="/posts/<%= article.id %>?_method=PUT" method="POST"><%-include('_form_fields.ejs')%></form>
 		</div>
 	</body>
 </html>

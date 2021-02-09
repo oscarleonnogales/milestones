@@ -1,16 +1,75 @@
+if (process.env.NODE_ENV !== 'production') {
+	require('dotenv').config();
+}
+
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
-const User = require('./models/user');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const flash = require('express-flash');
+const session = require('express-session');
+const bcrypt = require('bcrypt');
 
-const Article = require('./models/article');
-const articleRouter = require('./routes/articles');
+const Post = require('./models/post');
+const postRouter = require('./routes/posts');
+const User = require('./models/user');
 const userRouter = require('./routes/users');
 
+// 3 Functions for passport
+passport.use(
+	new LocalStrategy((username, password, done) => {
+		User.findOne({ username: username }, async (err, user) => {
+			if (err) {
+				return done(err);
+			}
+			if (!user) {
+				return done(null, false, { message: 'Incorrect username' });
+			}
+			if (await bcrypt.compare(password, user.password)) {
+				return done(null, user);
+			}
+			return done(null, false, { message: 'Incorrect password' });
+		});
+	})
+);
+
+passport.serializeUser((user, done) => {
+	done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+	User.findById(id, (err, user) => {
+		done(err, user);
+	});
+});
+
+// Custom middleware
+function checkAuthenticated(req, res, next) {
+	if (req.isAuthenticated()) return next();
+	res.redirect('/login');
+}
+
+function checkNotAuthenticated(req, res, next) {
+	if (req.isAuthenticated()) return res.redirect('/');
+	next();
+}
+
+// Setting all dependencies
 app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
 app.use(express.urlencoded({ extended: false }));
+app.use(flash());
+app.use(
+	session({
+		secret: process.env.SESSION_SECRET,
+		resave: false,
+		saveUninitialized: false,
+	})
+);
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.json()); // Remove for production
 
 mongoose.connect('mongodb://localhost/blogsite', {
@@ -19,22 +78,44 @@ mongoose.connect('mongodb://localhost/blogsite', {
 	useCreateIndex: true,
 });
 
+// All routes
+
+//homepage with all posts
 app.get('/', async (req, res) => {
-	const articles = await Article.find().sort({ createdAt: 'desc' });
+	const posts = await Post.find().sort({ createdAt: 'desc' });
+	console.log('IN SERVER');
+	posts.forEach((post) => console.log(post));
 	res.render('index', {
-		articles: articles,
+		user: req.user,
+		posts: posts,
 	});
 });
 
-app.get('/login', (req, res) => {
-	res.render('users/login', { user: new User(), error: null });
+//login page
+app.get('/login', checkNotAuthenticated, (req, res) => {
+	res.render('users/login', { user: new User(), error: null, message: null });
 });
 
-app.get('/signup', (req, res) => {
+app.post(
+	'/login',
+	passport.authenticate('local', {
+		successRedirect: '/',
+		failureRedirect: '/login',
+		failureFlash: true,
+	})
+);
+
+app.delete('/logout', (req, res) => {
+	req.logOut();
+	res.redirect('/');
+});
+
+//signup page
+app.get('/signup', checkNotAuthenticated, (req, res) => {
 	res.render('users/signup', { user: new User(), error: null });
 });
 
-app.use('/articles', articleRouter);
+app.use('/posts', postRouter);
 app.use('/users', userRouter);
 
 app.listen(5000);
