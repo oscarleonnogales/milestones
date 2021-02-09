@@ -17,6 +17,8 @@ const postRouter = require('./routes/posts');
 const User = require('./models/user');
 const userRouter = require('./routes/users');
 
+import { checkNotAuthenticated } from './basicAuth';
+
 // 3 Functions for passport
 passport.use(
 	new LocalStrategy((username, password, done) => {
@@ -44,17 +46,6 @@ passport.deserializeUser((id, done) => {
 		done(err, user);
 	});
 });
-
-// Custom middleware
-function checkAuthenticated(req, res, next) {
-	if (req.isAuthenticated()) return next();
-	res.redirect('/login');
-}
-
-function checkNotAuthenticated(req, res, next) {
-	if (req.isAuthenticated()) return res.redirect('/');
-	next();
-}
 
 // Setting all dependencies
 app.set('view engine', 'ejs');

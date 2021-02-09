@@ -4,7 +4,8 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"devstart": "nodemon server.js"
+		"start": "node -r esm server.js",
+		"devStart": "nodemon -r esm server.js"
 	},
 	"repository": {
 		"type": "git",
@@ -22,6 +23,7 @@
 		"dompurify": "^2.2.6",
 		"dotenv": "^8.2.0",
 		"ejs": "^3.1.5",
+		"esm": "^3.2.25",
 		"express": "^4.17.1",
 		"express-flash": "^0.0.2",
 		"express-session": "^1.17.1",
@@ -32,5 +34,8 @@
 		"passport": "^0.4.1",
 		"passport-local": "^1.0.0",
 		"slugify": "^1.4.6"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.7"
 	}
 }
