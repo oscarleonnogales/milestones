@@ -17,8 +17,12 @@
 			<h1 class="mb-1"><%=post.title %></h1>
 			<div class="text-muted mb-2"><%=post.createdAt.toLocaleDateString() %></div>
 			<a href="/" class="btn btn-secondary">All Posts</a>
+			<% if(renderButtons) {%>
 			<a href="/posts/edit/<%=post.id %>" class="btn btn-info">Edit</a>
-
+			<form action="/posts/<%= post.id %>?_method=DELETE" method="POST">
+				<button type="submit" class="btn btn-danger">Delete</button>
+			</form>
+			<% } %>
 			<div><%- post.sanitizedHTML %></div>
 		</div>
 	</body>

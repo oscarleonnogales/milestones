@@ -10,12 +10,15 @@
 			integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
 			crossorigin="anonymous"
 		/>
-		<title>Edit</title>
+		<link href="/stylesheets/main.css" rel="stylesheet" type="text/css" />
+		<link href="/stylesheets/404.css" rel="stylesheet" type="text/css" />
+		<title>Invalid Permission</title>
 	</head>
 	<body>
-		<div class="container">
-			<h1 class="mb-4">Edit Post</h1>
-			<form action="/posts/<%= post.id %>?_method=PUT" method="POST"><%-include('_form_fields.ejs')%></form>
+		<div class="center-404">
+			<h1 class="title-404">403</h1>
+			<p style="font-size: 5rem">You are not authorized to view this page.</p>
+			<a href="/" class="btn btn-primary" style="width: 10rem">Return Home</a>
 		</div>
 	</body>
 </html>

@@ -49,6 +49,7 @@ passport.deserializeUser((id, done) => {
 
 // Setting all dependencies
 app.set('view engine', 'ejs');
+app.use(express.static(__dirname + '/public'));
 app.use(methodOverride('_method'));
 app.use(express.urlencoded({ extended: false }));
 app.use(flash());
@@ -110,5 +111,11 @@ app.get('/signup', checkNotAuthenticated, (req, res) => {
 
 app.use('/posts', postRouter);
 app.use('/users', userRouter);
+
+// 404 page
+app.get('*', (req, res) => {
+	res.status(404);
+	res.render('404');
+});
 
 app.listen(5000);
