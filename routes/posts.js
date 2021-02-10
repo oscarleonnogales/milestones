@@ -34,6 +34,7 @@ router.get('/:slug', async (req, res) => {
 	}
 });
 
+// Create a new post
 router.post('/', checkAuthenticated, async (req, res) => {
 	const user = req.user;
 	let post = new Post({
@@ -75,10 +76,11 @@ router.put('/:id', checkAuthenticated, async (req, res) => {
 	}
 });
 
+// Delete a post
 router.delete('/:id', checkAuthenticated, async (req, res) => {
 	const post = await Post.findById(req.params.id);
 	if (authUser(req.user, post)) {
-		await Post.findByIdAndDelete(req.params.id);
+		await post.deleteOne({ id: post.id });
 		res.status(204);
 		res.redirect('/');
 	} else {

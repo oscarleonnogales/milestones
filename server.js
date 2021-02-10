@@ -74,6 +74,8 @@ mongoose.connect('mongodb://localhost/blogsite', {
 
 //homepage with all posts
 app.get('/', async (req, res) => {
+	// await Post.deleteMany({});
+	// await User.deleteMany({});
 	const posts = await Post.find().sort({ createdAt: 'desc' }).populate('author');
 	res.status(200);
 	res.render('index', {

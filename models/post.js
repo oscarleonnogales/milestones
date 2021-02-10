@@ -4,6 +4,7 @@ const marked = require('marked');
 const createDomPurify = require('dompurify');
 const { JSDOM } = require('jsdom');
 const domPurify = createDomPurify(new JSDOM().window);
+import User from './user';
 
 const postSchema = new mongoose.Schema({
 	title: {
@@ -48,6 +49,13 @@ postSchema.pre('validate', function (next) {
 	if (this.markdown) {
 		this.sanitizedHTML = domPurify.sanitize(marked(this.markdown));
 	}
+	next();
+});
+
+postSchema.pre('deleteOne', { document: true, query: false }, async function (next) {
+	const user = await User.findById(this.author);
+	user.posts = user.posts.filter((post) => post != this.id);
+	await user.save();
 	next();
 });
 
