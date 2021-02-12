@@ -2,25 +2,54 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
+import { checkAuthenticated } from '../basicAuth';
 
 router.get('/', async (req, res) => {
 	const users = await User.find();
 	res.render('users');
 });
 
-router.get('/:username', async (req, res) => {
-	let user;
-	try {
-		user = await User.findOne({ username: req.params.username }).populate('posts');
-		if (user) {
-			res.status(200);
-			res.render('users/profile', { user: user });
-		} else throw new Error("User doesn't exist");
-	} catch (error) {
-		res.status(404);
-		res.render('404', { error: error });
-	}
-});
+// Show a user profile
+// router.get('/:username', async (req, res) => {
+// 	let user;
+// 	try {
+// 		user = await User.findOne({ username: req.params.username }).populate('posts');
+// 		if (user) {
+// 			res.status(200);
+// 			let loggedInUser = undefined;
+// 			if (req.user) {
+// 				loggedInUser = await req.user.populate('following');
+// 				console.table(loggedInUser.following);
+// 			}
+// 			res.render('users/profile', { user: user, loggedInUser: loggedInUser });
+// 		} else throw new Error("User doesn't exist");
+// 	} catch (error) {
+// 		console.log(error);
+// 		res.status(404);
+// 		res.render('404', { error: error });
+// 	}
+// });
+
+// Follow a user
+// router.put('/follow/:username', checkAuthenticated, async (req, res) => {
+// 	if (req.user.username != req.params.username) {
+// 		const user = req.user;
+// 		try {
+// 			const userProfile = await User.find({ username: req.params.username });
+// 			user.following.push(userProfile);
+// 			await user.save();
+// 			console.log('now following');
+// 			console.log(user);
+// 			res.status(200);
+// 		} catch (error) {
+// 			res.status(500);
+// 		}
+// 	} else {
+// 		res.status(400);
+// 		console.log('cant follow yourself');
+// 	}
+// 	res.redirect(`/users/${req.params.username}`);
+// });
 
 // Creating a new user
 router.post('/signup', async (req, res) => {
