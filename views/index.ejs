@@ -35,7 +35,7 @@
 			<% } posts.forEach(post => { %>
 			<div class="card mt-4 mb-4 post-container">
 				<div class="card-body">
-					<h4 class="card-title"><a href="posts/<%= post.slug %>"><%=post.title %></a></h4>
+					<h4 class="card-title"><a href="/posts/<%= post.slug %>"><%=post.title %></a></h4>
 					<div class="card-subtitle text-muted mb-2">
 						Submitted on <%=post.createdAt.toLocaleDateString() %> by
 						<a href="/users/<%= post.author.username %>"><%= post.author.username %></a>

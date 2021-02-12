@@ -1,3 +1,11 @@
 body {
 	background: #e2e2e2;
 }
+
+.post-container {
+	border: 1px solid grey;
+}
+
+.post-container:hover {
+	border: 1px solid #0b5ed7;
+}

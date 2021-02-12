@@ -10,11 +10,3 @@
 	align-items: center;
 	gap: 10px;
 }
-
-.post-container {
-	border: 1px solid grey;
-}
-
-.post-container:hover {
-	border: 1px solid #0b5ed7;
-}
