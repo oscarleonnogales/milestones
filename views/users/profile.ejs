@@ -16,13 +16,16 @@
 				<div>PROFILE PIC</div>
 				<h1><%= user.username %></h1>
 				<h3><%= user.location %></h3>
-				<form action="/users/follow/<%= user.username %>?_method=PUT" method="POST">
-					<% if(loggedInUser ) { %>
-					<button type="submit" class="btn btn-primary">Follow</button>
-					<% } else {%>
+
+				<% if(alreadyFollowing) { %>
+				<form action="/users/unfollow/<%= user.username %>?_method=PUT" method="POST">
 					<button type="submit" class="btn btn-danger">Unfollow</button>
-					<% } %>
 				</form>
+				<% } else {%>
+				<form action="/users/follow/<%= user.username %>?_method=PUT" method="POST">
+					<button type="submit" class="btn btn-primary">Follow</button>
+				</form>
+				<% } %>
 			</div>
 			<div class="container">
 				<% user.posts.forEach(post => { %>

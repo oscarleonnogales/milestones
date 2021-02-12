@@ -8,20 +8,23 @@ POST http://localhost:5000/users/signup
 Content-Type: application/json
 
 {
-    "username": "nopal",
-    "password": "Password",
-    "confirmPassword": "password"
+    "username": "oscar",
+    "password": "password123",
+    "confirmPassword": "password123"
 }
 
 ###
 
-POST http://localhost:5000/users/login
+POST http://localhost:5000/login
 Content-Type: application/json
 
 {
     "username": "oscar",
-    "password": "pass"
+    "password": "password123"
 }
+###
+
+DELETE http://localhost:5000/logout
 ###
 
 POST http://localhost:5000/login
