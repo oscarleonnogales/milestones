@@ -4,17 +4,16 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<!-- Bootstrap CSS -->
-		<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-			rel="stylesheet"
-			integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
-			crossorigin="anonymous"
-		/>
+		<link href="/stylesheets/bootstrap.css" rel="stylesheet" />
 		<link href="/stylesheets/main.css" rel="stylesheet" type="text/css" />
 		<link href="/stylesheets/homepage.css" rel="stylesheet" type="text/css" />
+		<link href="/stylesheets/_navbar.css" rel="stylesheet" type="text/css" />
+		<!-- <script src="/scripts/homepage.js" defer></script> -->
 		<title>Blogsite</title>
+		<link rel="shortcut icon" href="#" />
 	</head>
 	<body>
+		<%- include('_navbar.ejs') %>
 		<div class="container">
 			<h1 class="mb-4">Blog posts</h1>
 			<% if(user) { %>
@@ -36,14 +35,16 @@
 			<% } posts.forEach(post => { %>
 			<div class="card mt-4 mb-4 post-container">
 				<div class="card-body">
-					<h4 class="card-title"><%=post.title %></h4>
-					<div class="card-subtitle text-muted mb-2"><%=post.createdAt.toLocaleDateString() %></div>
+					<h4 class="card-title"><a href="posts/<%= post.slug %>"><%=post.title %></a></h4>
 					<div class="card-subtitle text-muted mb-2">
-						by <a href="/users/<%= post.author.username %>"><%= post.author.username %></a>
+						Submitted on <%=post.createdAt.toLocaleDateString() %> by
+						<a href="/users/<%= post.author.username %>"><%= post.author.username %></a>
 					</div>
 					<div class="card-text mb-2"><%=post.description %></div>
-
-					<a href="posts/<%= post.slug %>" class="btn btn-primary">Read More</a>
+					<div class="mb-1">
+						<button class="btn btn-primary">Icon</button>
+						<span><%= post.likes.length %> likes</span>
+					</div>
 
 					<% if(user && (user.id == post.author.id || user.role === 'admin')) {%>
 					<a href="posts/edit/<%= post.id %>" class="btn btn-info">Edit</a>

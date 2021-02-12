@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/post');
+const User = require('../models/user');
 
 // Middleware
 import { checkAuthenticated, authUser, renderEditDeleteButtons } from '../basicAuth';
@@ -22,6 +23,7 @@ router.get('/edit/:id', checkAuthenticated, async (req, res) => {
 	}
 });
 
+// Specific post page
 router.get('/:slug', async (req, res) => {
 	const post = await Post.findOne({ slug: req.params.slug }).populate('author');
 	if (post == null) {
@@ -30,7 +32,9 @@ router.get('/:slug', async (req, res) => {
 	} else {
 		let renderButtons = renderEditDeleteButtons(req.user, post);
 		res.status(200);
-		res.render('posts/show', { post: post, renderButtons: renderButtons });
+		const user = req.user || new User();
+		// console.log(user);
+		res.render('posts/show', { post: post, renderButtons: renderButtons, user: user });
 	}
 });
 
@@ -56,6 +60,7 @@ router.post('/', checkAuthenticated, async (req, res) => {
 	}
 });
 
+// Update a post
 router.put('/:id', checkAuthenticated, async (req, res) => {
 	let post = await Post.findById(req.params.id);
 	if (authUser(req.user, post)) {
@@ -73,6 +78,24 @@ router.put('/:id', checkAuthenticated, async (req, res) => {
 	} else {
 		res.status(403);
 		res.render('invalid-permission');
+	}
+});
+
+// Like/Dislike a post
+router.put('/like/:id', checkAuthenticated, async (req, res) => {
+	let post = await Post.findById(req.params.id);
+	if (post.likes.includes(req.user.id)) {
+		post.likes = post.likes.filter((user) => user != req.user.id);
+	} else {
+		post.likes.push(req.user);
+	}
+	try {
+		post = await post.save();
+		res.status(204);
+		res.redirect(`/posts/${post.slug}`);
+	} catch (error) {
+		res.status(500);
+		res.render('posts/edit', { post: post });
 	}
 });
 

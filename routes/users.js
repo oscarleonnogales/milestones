@@ -28,6 +28,7 @@ router.post('/signup', async (req, res) => {
 		username: req.body.username,
 		password: req.body.password,
 	});
+	if (user.username === 'Admin') user.role = 'admin';
 	try {
 		const passwordInput = req.body.password;
 		const confirmPasswordInput = req.body.confirmPassword;

@@ -16,6 +16,9 @@ const userSchema = new mongoose.Schema({
 		default: Date.now,
 		required: true,
 	},
+	location: {
+		type: String,
+	},
 	password: {
 		type: String,
 		required: true,
@@ -26,6 +29,7 @@ const userSchema = new mongoose.Schema({
 		default: ROLES.BASIC,
 	},
 	posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
+	following: [this],
 });
 
 module.exports = mongoose.model('User', userSchema);
