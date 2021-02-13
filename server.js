@@ -16,6 +16,7 @@ const Post = require('./models/post');
 const postRouter = require('./routes/posts');
 const User = require('./models/user');
 const userRouter = require('./routes/users');
+const Comment = require('./models/comment');
 
 import { checkNotAuthenticated } from './basicAuth';
 
@@ -74,7 +75,9 @@ mongoose.connect('mongodb://localhost/blogsite', {
 
 //homepage with all posts
 app.get('/', async (req, res) => {
+	// await Comment.deleteMany({});
 	// await Post.deleteMany({});
+	// await User.deleteMany({});
 	// await User.deleteOne({ username: 'oscar' });
 	console.log(req.user);
 	const posts = await Post.find().sort({ createdAt: 'desc' }).populate('author');

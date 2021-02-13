@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/post');
 const User = require('../models/user');
+const Comment = require('../models/comment');
 
 // Middleware
 import { checkAuthenticated, authUser, renderEditDeleteButtons } from '../basicAuth';
@@ -26,15 +27,19 @@ router.get('/edit/:id', checkAuthenticated, async (req, res) => {
 // Specific post page
 router.get('/:slug', async (req, res) => {
 	const post = await Post.findOne({ slug: req.params.slug }).populate('author');
+	let comments;
 	if (post == null) {
 		res.status(404);
-		res.render('404', { error: null });
+		const error = new Error('Cannot find that post');
+		res.render('404', { error: error });
 	} else {
+		comments = await Comment.find({ post: post }).populate('author');
+		console.log('COMMENTS');
+		console.log(comments);
 		let renderButtons = renderEditDeleteButtons(req.user, post);
 		res.status(200);
 		const user = req.user || new User();
-		// console.log(user);
-		res.render('posts/show', { post: post, renderButtons: renderButtons, user: user });
+		res.render('posts/show', { post: post, comments: comments, renderButtons: renderButtons, user: user });
 	}
 });
 
@@ -58,6 +63,23 @@ router.post('/', checkAuthenticated, async (req, res) => {
 		res.status(500);
 		res.render('posts/new', { post: post });
 	}
+});
+
+// Comment on a post
+router.post('/comments/:id', checkAuthenticated, async (req, res) => {
+	const post = await Post.findById(req.params.id);
+	try {
+		const newComment = new Comment({
+			author: req.user,
+			text: req.body.commentText,
+			post: post,
+		});
+		await newComment.save();
+		res.status(201);
+	} catch (error) {
+		res.status(500);
+	}
+	res.redirect(`/posts/${post.slug}`);
 });
 
 // Update a post
