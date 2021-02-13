@@ -1,60 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<!-- Bootstrap CSS -->
-		<link href="/stylesheets/bootstrap.css" rel="stylesheet" />
-		<link href="/stylesheets/main.css" rel="stylesheet" type="text/css" />
-		<link href="/stylesheets/homepage.css" rel="stylesheet" type="text/css" />
-		<link href="/stylesheets/_navbar.css" rel="stylesheet" type="text/css" />
-		<!-- <script src="/scripts/homepage.js" defer></script> -->
-		<title>Blogsite</title>
-		<link rel="shortcut icon" href="#" />
-	</head>
-	<body>
-		<%- include('_navbar.ejs') %>
-		<div class="container">
-			<h1 class="mb-4">Blog posts</h1>
-			<% if(user) { %>
-			<div class="buttons-container logged-in">
-				<div>
-					Welcome, <span><a href="/users/<%=user.username%>"><%=user.username%></a></span>
-				</div>
-				<form action="/logout?_method=DELETE" method="POST">
-					<button type="submit" class="btn btn-danger">Log Out</button>
-				</form>
-			</div>
-			<% } if(!user) { %>
-			<div class="buttons-container">
-				<a href="/signup" class="btn btn-primary">Sign Up</a>
-				<a href="/login" class="btn btn-secondary">Log In</a>
-			</div>
-			<% } if(user) { %>
-			<a href="/posts/new" class="btn btn-success">New post</a>
-			<% } posts.forEach(post => { %>
-			<div class="card mt-4 mb-4 post-container">
-				<div class="card-body">
-					<h4 class="card-title"><a href="/posts/<%= post.slug %>"><%=post.title %></a></h4>
-					<div class="card-subtitle text-muted mb-2">
-						Submitted on <%=post.createdAt.toLocaleDateString() %> by
-						<a href="/users/<%= post.author.username %>"><%= post.author.username %></a>
-					</div>
-					<div class="card-text mb-2"><%=post.description %></div>
-					<div class="mb-1">
-						<button class="btn btn-primary">Icon</button>
-						<span><%= post.likes.length %> likes</span>
-					</div>
-
-					<% if(user && (user.id == post.author.id || user.role === 'admin')) {%>
-					<a href="posts/edit/<%= post.id %>" class="btn btn-info">Edit</a>
-					<form method="POST" action="/posts/<%= post.id %>?_method=DELETE" class="d-inline">
-						<button class="btn-danger btn" type="submit">Delete</button>
-					</form>
-					<% } %>
-				</div>
-			</div>
-			<% }) %>
+<div class="container">
+	<h1 class="mb-4">Blog posts</h1>
+	<% if(user) { %>
+	<div class="buttons-container logged-in">
+		<div>
+			Welcome, <span><a href="/users/<%=user.username%>"><%=user.username%></a></span>
 		</div>
-	</body>
-</html>
+		<form action="/logout?_method=DELETE" method="POST">
+			<button type="submit" class="btn btn-danger">Log Out</button>
+		</form>
+	</div>
+	<% } if(!user) { %>
+	<div class="buttons-container">
+		<a href="/signup" class="btn btn-primary">Sign Up</a>
+		<a href="/login" class="btn btn-secondary">Log In</a>
+	</div>
+	<% } if(user) { %>
+	<a href="/posts/new" class="btn btn-success">New post</a>
+	<% } posts.forEach(post => { %>
+	<div class="card mt-4 mb-4 post-container">
+		<div class="card-body">
+			<h4 class="card-title"><a href="/posts/<%= post.slug %>"><%=post.title %></a></h4>
+			<div class="card-subtitle text-muted mb-2">
+				Submitted on <%=post.createdAt.toLocaleDateString() %> by
+				<a href="/users/<%= post.author.username %>"><%= post.author.username %></a>
+			</div>
+			<div class="card-text mb-2"><%=post.description %></div>
+			<div class="mb-1">
+				<button class="btn btn-primary">Icon</button>
+				<span><%= post.likes.length %> likes</span>
+				<button class="btn btn-primary">Icon</button>
+				<span><%= post.commentsCount %> comments</span>
+			</div>
+
+			<% if(user && (user.id == post.author.id || user.role === 'admin')) {%>
+			<a href="posts/edit/<%= post.id %>" class="btn btn-info">Edit</a>
+			<form method="POST" action="/posts/<%= post.id %>?_method=DELETE" class="d-inline">
+				<button class="btn-danger btn" type="submit">Delete</button>
+			</form>
+			<% } %>
+		</div>
+	</div>
+	<% }) %>
+</div>

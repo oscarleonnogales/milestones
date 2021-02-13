@@ -10,6 +10,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const flash = require('express-flash');
 const session = require('express-session');
+const expressLayouts = require('express-ejs-layouts');
 const bcrypt = require('bcrypt');
 
 const Post = require('./models/post');
@@ -50,6 +51,9 @@ passport.deserializeUser((id, done) => {
 
 // Setting all dependencies
 app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
+app.set('layout', 'layouts/layout');
+app.use(expressLayouts);
 app.use(express.static(__dirname + '/public'));
 app.use(methodOverride('_method'));
 app.use(express.urlencoded({ extended: false }));
@@ -78,8 +82,6 @@ app.get('/', async (req, res) => {
 	// await Comment.deleteMany({});
 	// await Post.deleteMany({});
 	// await User.deleteMany({});
-	// await User.deleteOne({ username: 'oscar' });
-	console.log(req.user);
 	const posts = await Post.find().sort({ createdAt: 'desc' }).populate('author');
 	res.status(200);
 	res.render('index', {

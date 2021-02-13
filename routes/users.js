@@ -36,7 +36,6 @@ router.get('/:username', async (req, res) => {
 			res.render('users/profile', { user: userViewing, loggedIn: loggedIn, alreadyFollowing: alreadyFollowing });
 		} else throw new Error("User doesn't exist");
 	} catch (error) {
-		console.log(error);
 		res.status(404);
 		res.render('404', { error: error });
 	}
@@ -50,11 +49,8 @@ router.put('/follow/:username', checkAuthenticated, async (req, res) => {
 			const userToFollow = await User.findOne({ username: req.params.username });
 			loggedInUser.following.push(userToFollow);
 			await loggedInUser.save();
-			console.log(`${loggedInUser.username} is now following ${userToFollow.username}`);
-			console.log(loggedInUser);
 			res.status(200);
 		} catch (error) {
-			console.log(error);
 			res.status(500);
 		}
 	} else {

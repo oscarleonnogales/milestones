@@ -1,57 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<!-- Bootstrap CSS -->
-		<link href="/stylesheets/bootstrap.css" rel="stylesheet" />
-		<link href="/stylesheets/main.css" rel="stylesheet" type="text/css" />
-		<link href="/stylesheets/_navbar.css" rel="stylesheet" type="text/css" />
-		<title><%= user.username %></title>
-	</head>
-	<body>
-		<%- include('../_navbar.ejs') %>
-		<div class="container">
-			<div class="user-details">
-				<div>PROFILE PIC</div>
-				<h1><%= user.username %></h1>
-				<h3><%= user.location %></h3>
+<div class="container">
+	<div class="user-details">
+		<div>PROFILE PIC</div>
+		<h1><%= user.username %></h1>
+		<h3><%= user.location %></h3>
 
-				<% if((loggedIn && !alreadyFollowing) || !loggedIn) { %>
-				<form action="/users/follow/<%= user.username %>?_method=PUT" method="POST">
-					<button type="submit" class="btn btn-primary">Follow</button>
-				</form>
-				<% } else {%>
-				<form action="/users/unfollow/<%= user.username %>?_method=PUT" method="POST">
-					<button type="submit" class="btn btn-danger">Unfollow</button>
+		<% if((loggedIn && !alreadyFollowing) || !loggedIn) { %>
+		<form action="/users/follow/<%= user.username %>?_method=PUT" method="POST">
+			<button type="submit" class="btn btn-primary">Follow</button>
+		</form>
+		<% } else {%>
+		<form action="/users/unfollow/<%= user.username %>?_method=PUT" method="POST">
+			<button type="submit" class="btn btn-danger">Unfollow</button>
+		</form>
+		<% } %>
+	</div>
+	<div class="container">
+		<% user.posts.forEach(post => { %>
+		<div class="card mt-4 mb-4 post-container">
+			<div class="card-body">
+				<h4 class="card-title"><a href="/posts/<%= post.slug %>"><%=post.title %></a></h4>
+				<div class="card-subtitle text-muted mb-2">
+					Submitted on <%=post.createdAt.toLocaleDateString() %> by
+					<a href="/users/<%= post.author.username %>"><%= post.author.username %></a>
+				</div>
+				<div class="card-text mb-2"><%=post.description %></div>
+				<div class="mb-1">
+					<button class="btn btn-primary">Icon</button>
+					<span><%= post.likes.length %> likes</span>
+				</div>
+
+				<% if(user && (user.id == post.author.id || user.role === 'admin')) {%>
+				<a href="posts/edit/<%= post.id %>" class="btn btn-info">Edit</a>
+				<form method="POST" action="/posts/<%= post.id %>?_method=DELETE" class="d-inline">
+					<button class="btn-danger btn" type="submit">Delete</button>
 				</form>
 				<% } %>
 			</div>
-			<div class="container">
-				<% user.posts.forEach(post => { %>
-				<div class="card mt-4 mb-4 post-container">
-					<div class="card-body">
-						<h4 class="card-title"><a href="/posts/<%= post.slug %>"><%=post.title %></a></h4>
-						<div class="card-subtitle text-muted mb-2">
-							Submitted on <%=post.createdAt.toLocaleDateString() %> by
-							<a href="/users/<%= post.author.username %>"><%= post.author.username %></a>
-						</div>
-						<div class="card-text mb-2"><%=post.description %></div>
-						<div class="mb-1">
-							<button class="btn btn-primary">Icon</button>
-							<span><%= post.likes.length %> likes</span>
-						</div>
-
-						<% if(user && (user.id == post.author.id || user.role === 'admin')) {%>
-						<a href="posts/edit/<%= post.id %>" class="btn btn-info">Edit</a>
-						<form method="POST" action="/posts/<%= post.id %>?_method=DELETE" class="d-inline">
-							<button class="btn-danger btn" type="submit">Delete</button>
-						</form>
-						<% } %>
-					</div>
-				</div>
-				<% }) %>
-			</div>
 		</div>
-	</body>
-</html>
+		<% }) %>
+	</div>
+</div>

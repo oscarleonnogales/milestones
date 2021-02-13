@@ -34,8 +34,6 @@ router.get('/:slug', async (req, res) => {
 		res.render('404', { error: error });
 	} else {
 		comments = await Comment.find({ post: post }).populate('author');
-		console.log('COMMENTS');
-		console.log(comments);
 		let renderButtons = renderEditDeleteButtons(req.user, post);
 		res.status(200);
 		const user = req.user || new User();
@@ -82,6 +80,18 @@ router.post('/comments/:id', checkAuthenticated, async (req, res) => {
 	res.redirect(`/posts/${post.slug}`);
 });
 
+// Delete a comment
+router.delete('/comments/:id', checkAuthenticated, async (req, res) => {
+	const comment = await Comment.findById(req.params.id);
+	if (authUser(req.user, comment)) {
+		await comment.deleteOne({ id: comment.id });
+		res.status(204);
+		res.redirect('/');
+	} else {
+		res.status(403);
+		res.render('invalid-permission');
+	}
+});
 // Update a post
 router.put('/:id', checkAuthenticated, async (req, res) => {
 	let post = await Post.findById(req.params.id);

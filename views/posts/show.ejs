@@ -1,50 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<!-- Bootstrap CSS -->
-		<link href="/stylesheets/bootstrap.css" rel="stylesheet" />
-		<link href="/stylesheets/main.css" rel="stylesheet" type="text/css" />
-		<link href="/stylesheets/show-post.css" rel="stylesheet" type="text/css" />
-		<title>Blogsite - <%= post.title %></title>
-	</head>
-	<body>
-		<div class="container d-flex">
-			<a href="/" class="btn btn-primary" style="margin: 0.5rem">All Posts</a>
-			<% if(renderButtons) {%>
-			<a href="/posts/edit/<%=post.id %>" class="btn btn-info" style="margin: 0.5rem">Edit</a>
-			<form action="/posts/<%= post.id %>?_method=DELETE" method="POST">
-				<button type="submit" class="btn btn-danger" style="margin: 0.5rem">Delete</button>
-			</form>
-			<% } %>
+<div class="container d-flex">
+	<a href="/" class="btn btn-primary" style="margin: 0.5rem">All Posts</a>
+	<% if(renderButtons) {%>
+	<a href="/posts/edit/<%=post.id %>" class="btn btn-info" style="margin: 0.5rem">Edit</a>
+	<form action="/posts/<%= post.id %>?_method=DELETE" method="POST">
+		<button type="submit" class="btn btn-danger" style="margin: 0.5rem">Delete</button>
+	</form>
+	<% } %>
+</div>
+<div class="container card" style="border: 1px solid #0b5ed7">
+	<h1 class="mb-1"><%=post.title %></h1>
+	<div class="text-muted mb-2">
+		Submitted on <%=post.createdAt.toLocaleDateString() %> by
+		<a href="/users/<%=post.author.username %>"><%= post.author.username %></a>
+	</div>
+	<form method="POST" action="/posts/like/<%= post.id %>?_method=PUT">
+		<% if(user && post.likes.includes(user.id)) { %>
+		<button type="submit" class="btn btn-danger">Dislike</button>
+		<% } else { %>
+		<button type="submit" class="btn btn-primary">Like</button>
+		<% } %>
+		<div class="mb-1">
+			<button class="btn btn-primary">Icon</button
+			><!-- Make these into icons -->
+			<span><%= post.likes.length %> likes</span>
+			<button class="btn btn-primary">Icon</button>
+			<span><%= post.commentsCount %> comments</span>
 		</div>
-		<div class="container card" style="border: 1px solid #0b5ed7">
-			<h1 class="mb-1"><%=post.title %></h1>
-			<div class="text-muted mb-2">
-				Submitted on <%=post.createdAt.toLocaleDateString() %> by
-				<a href="/users/<%=post.author.username %>"><%= post.author.username %></a>
-			</div>
-			<form method="POST" action="/posts/like/<%= post.id %>?_method=PUT">
-				<% if(user && post.likes.includes(user.id)) { %>
-				<button type="submit" class="btn btn-danger">Dislike</button>
-				<% } else { %>
-				<button type="submit" class="btn btn-primary">Like</button>
-				<% } %>
-				<span><%= post.likes.length %> likes</span>
-			</form>
-			<div><%- post.sanitizedHTML %></div>
-		</div>
-		<form action="/posts/comments/<%= post.id %>" method="POST">
-			<label for="commentText">Comment</label>
-			<input type="text" name="commentText" id="commentText" class="form-control" />
-			<button class="btn btn-primary" type="submit">Comment</button>
-		</form>
-		<div class="container">
-			<% if(comments) {comments.forEach(comment => { %>
-			<div class="card-text"><%= comment.text %></div>
-			<div class="card-subtitle">by <%= comment.author.username %></div>
-			<% })} %>
-		</div>
-	</body>
-</html>
+	</form>
+	<div><%- post.sanitizedHTML %></div>
+</div>
+<form action="/posts/comments/<%= post.id %>" method="POST">
+	<label for="commentText">Comment</label>
+	<input type="text" name="commentText" id="commentText" class="form-control" />
+	<button class="btn btn-primary" type="submit">Comment</button>
+</form>
+<div class="container">
+	<% if(comments) {comments.forEach(comment => { %> <% if (user && (comment.author.id === user.id ||
+	user.role==='admin')) { %>
+	<form action="/posts/comments/<%= comment.id %>?_method=DELETE" method="POST">
+		<button type="submit" class="btn btn-danger">&times;</button>
+	</form>
+	<% } %>
+	<div class="card-text"><%= comment.text %></div>
+	<div class="card-subtitle">by <a href="/users/<%= comment.author.username %>"><%= comment.author.username %></a></div>
+	<% })} %>
+</div>

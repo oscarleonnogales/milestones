@@ -5,6 +5,7 @@ const createDomPurify = require('dompurify');
 const { JSDOM } = require('jsdom');
 const domPurify = createDomPurify(new JSDOM().window);
 import User from './user';
+import Comment from './comment';
 
 const postSchema = new mongoose.Schema({
 	title: {
@@ -17,6 +18,10 @@ const postSchema = new mongoose.Schema({
 		ref: 'User',
 	},
 	likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+	commentsCount: {
+		type: Number,
+		default: 0,
+	},
 	description: {
 		type: String,
 	},
@@ -57,6 +62,7 @@ postSchema.pre('deleteOne', { document: true, query: false }, async function (ne
 	const user = await User.findById(this.author);
 	user.posts = user.posts.filter((post) => post != this.id);
 	await user.save();
+	await Comment.deleteMany({ post: this });
 	next();
 });
 
