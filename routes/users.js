@@ -4,14 +4,24 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user');
 import { checkAuthenticated } from '../basicAuth';
 
+// All users
 router.get('/', async (req, res) => {
-	const users = await User.find();
-	res.render('users');
+	let searchOptions = {};
+	if (req.query.username != null && req.query.username !== '') {
+		searchOptions.username = new RegExp(req.query.username, 'i');
+	}
+	try {
+		const users = await User.find(searchOptions);
+		res.render('users/index', { users: users, searchOptions: req.query });
+	} catch {
+		res.redirect('/');
+	}
 });
 
 // Show a user profile
 router.get('/:username', async (req, res) => {
 	let userViewing;
+	let loggedIn = false;
 	try {
 		userViewing = await User.findOne({ username: req.params.username }).populate('posts');
 		if (userViewing) {
@@ -21,8 +31,9 @@ router.get('/:username', async (req, res) => {
 				req.user.following.forEach((user) => {
 					if (user.username === req.params.username) alreadyFollowing = true;
 				});
+				loggedIn = true;
 			}
-			res.render('users/profile', { user: userViewing, alreadyFollowing: alreadyFollowing });
+			res.render('users/profile', { user: userViewing, loggedIn: loggedIn, alreadyFollowing: alreadyFollowing });
 		} else throw new Error("User doesn't exist");
 	} catch (error) {
 		console.log(error);

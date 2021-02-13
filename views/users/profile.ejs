@@ -17,13 +17,13 @@
 				<h1><%= user.username %></h1>
 				<h3><%= user.location %></h3>
 
-				<% if(alreadyFollowing) { %>
-				<form action="/users/unfollow/<%= user.username %>?_method=PUT" method="POST">
-					<button type="submit" class="btn btn-danger">Unfollow</button>
-				</form>
-				<% } else {%>
+				<% if((loggedIn && !alreadyFollowing) || !loggedIn) { %>
 				<form action="/users/follow/<%= user.username %>?_method=PUT" method="POST">
 					<button type="submit" class="btn btn-primary">Follow</button>
+				</form>
+				<% } else {%>
+				<form action="/users/unfollow/<%= user.username %>?_method=PUT" method="POST">
+					<button type="submit" class="btn btn-danger">Unfollow</button>
 				</form>
 				<% } %>
 			</div>

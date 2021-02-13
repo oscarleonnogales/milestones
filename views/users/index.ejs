@@ -7,6 +7,25 @@
 		<title>Users</title>
 	</head>
 	<body>
-		users homepages
+		<h2 class="page-header">Search Users</h2>
+		<form action="/users" method="GET">
+			<div class="form-row">
+				<div class="form-item">
+					<label for="name">Username</label>
+					<input type="text" name="username" value="<%=searchOptions.username%>" />
+				</div>
+			</div>
+			<div class="form-row form-row-end">
+				<button type="submit" class="btn view-edit-btn">Search</button>
+			</div>
+		</form>
+		<br />
+		<% users.forEach(user => { %>
+		<div class="container">
+			<div class="card-body">
+				<div class="card-title"><%= user.username %></div>
+			</div>
+		</div>
+		<% }) %>
 	</body>
 </html>
