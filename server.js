@@ -13,13 +13,10 @@ const session = require('express-session');
 const expressLayouts = require('express-ejs-layouts');
 const bcrypt = require('bcrypt');
 
-const Post = require('./models/post');
+const indexRouter = require('./routes/index');
 const postRouter = require('./routes/posts');
 const User = require('./models/user');
 const userRouter = require('./routes/users');
-const Comment = require('./models/comment');
-
-import { checkNotAuthenticated } from './basicAuth';
 
 // 3 Functions for passport
 passport.use(
@@ -75,55 +72,8 @@ mongoose.connect('mongodb://localhost/blogsite', {
 	useCreateIndex: true,
 });
 
-// All routes
-
-//homepage with all posts
-app.get('/', async (req, res) => {
-	// await Comment.deleteMany({});
-	// await Post.deleteMany({});
-	// await User.deleteMany({});
-	const posts = await Post.find().sort({ createdAt: 'desc' }).populate('author');
-	res.status(200);
-	res.render('index', {
-		user: req.user,
-		posts: posts,
-	});
-});
-
-//login page
-app.get('/login', checkNotAuthenticated, (req, res) => {
-	res.status(200);
-	res.render('users/login', { user: new User(), error: null, message: null });
-});
-
-app.post(
-	'/login',
-	passport.authenticate('local', {
-		successRedirect: '/',
-		failureRedirect: '/login',
-		failureFlash: true,
-	})
-);
-
-app.delete('/logout', (req, res) => {
-	req.logOut();
-	res.status(200);
-	res.redirect('/');
-});
-
-//signup page
-app.get('/signup', checkNotAuthenticated, (req, res) => {
-	res.status(200);
-	res.render('users/signup', { user: new User(), error: null });
-});
-
 app.use('/posts', postRouter);
 app.use('/users', userRouter);
-
-// 404 page
-app.get('*', (req, res) => {
-	res.status(404);
-	res.render('404');
-});
+app.use('/', indexRouter);
 
 app.listen(5000);

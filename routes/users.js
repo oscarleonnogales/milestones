@@ -21,19 +21,23 @@ router.get('/', async (req, res) => {
 // Show a user profile
 router.get('/:username', async (req, res) => {
 	let userViewing;
-	let loggedIn = false;
+	let loggedInUser;
 	try {
 		userViewing = await User.findOne({ username: req.params.username }).populate('posts');
 		if (userViewing) {
-			res.status(200);
 			let alreadyFollowing = false;
 			if (req.user) {
 				req.user.following.forEach((user) => {
 					if (user.username === req.params.username) alreadyFollowing = true;
 				});
-				loggedIn = true;
+				loggedInUser = req.user;
 			}
-			res.render('users/profile', { user: userViewing, loggedIn: loggedIn, alreadyFollowing: alreadyFollowing });
+			res.status(200);
+			res.render('users/profile', {
+				user: userViewing,
+				loggedInUser: loggedInUser,
+				alreadyFollowing: alreadyFollowing,
+			});
 		} else throw new Error("User doesn't exist");
 	} catch (error) {
 		res.status(404);

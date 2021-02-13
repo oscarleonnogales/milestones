@@ -14,7 +14,7 @@
 <% users.forEach(user => { %>
 <div class="container">
 	<div class="card-body">
-		<div class="card-title"><%= user.username %></div>
+		<div class="card-title"><a href="/users/<%= user.username %>"><%= user.username %></a></div>
 	</div>
 </div>
 <% }) %>
