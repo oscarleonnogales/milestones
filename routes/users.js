@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
-import { checkAuthenticated } from '../basicAuth';
+import { checkAuthenticated, checkNotAuthenticated } from '../basicAuth';
 
 // All users
 router.get('/', async (req, res) => {
@@ -72,7 +72,7 @@ router.put('/unfollow/:username', checkAuthenticated, async (req, res) => {
 });
 
 // Creating a new user
-router.post('/signup', async (req, res) => {
+router.post('/signup', checkNotAuthenticated, async (req, res) => {
 	let user = new User({
 		username: req.body.username,
 		password: req.body.password,
