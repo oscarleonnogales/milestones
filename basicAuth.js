@@ -13,15 +13,11 @@ export function checkNotAuthenticated(req, res, next) {
 }
 
 // Verifying permission
-export function authUser(currentUser, post) {
-	return currentUser.id == post.author || currentUser.role === 'admin';
+export function authUser(client, post) {
+	return client.id == post.author || client.role === 'admin';
 }
 
-export function renderEditDeleteButtons(currentUser, post) {
-	if (currentUser == undefined) return false;
-	else return currentUser.id == post.author.id || currentUser.role === 'admin';
-}
-
-export function logger() {
-	console.log('logging');
+export function renderEditDeleteButtons(client, post) {
+	if (client == undefined) return false;
+	else return client.id == post.author.id || client.role === 'admin';
 }

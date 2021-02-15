@@ -20,22 +20,22 @@ router.get('/', async (req, res) => {
 
 // Show a user profile
 router.get('/:username', async (req, res) => {
-	let userViewing;
-	let loggedInUser;
+	let user;
+	let currentClient;
 	try {
-		userViewing = await User.findOne({ username: req.params.username }).populate('posts');
-		if (userViewing) {
+		user = await User.findOne({ username: req.params.username }).populate('posts');
+		if (user) {
 			let alreadyFollowing = false;
 			if (req.user) {
 				req.user.following.forEach((user) => {
 					if (user.username === req.params.username) alreadyFollowing = true;
 				});
-				loggedInUser = req.user;
+				currentClient = req.user;
 			}
 			res.status(200);
 			res.render('users/profile', {
-				user: userViewing,
-				loggedInUser: loggedInUser,
+				user: user,
+				currentClient: currentClient,
 				alreadyFollowing: alreadyFollowing,
 			});
 		} else throw new Error("User doesn't exist");
@@ -48,11 +48,11 @@ router.get('/:username', async (req, res) => {
 // Follow a user
 router.put('/follow/:username', checkAuthenticated, async (req, res) => {
 	if (req.user.username != req.params.username) {
-		const loggedInUser = req.user;
+		const currentClient = req.user;
 		try {
-			const userToFollow = await User.findOne({ username: req.params.username });
-			loggedInUser.following.push(userToFollow);
-			await loggedInUser.save();
+			const user = await User.findOne({ username: req.params.username });
+			currentClient.following.push(user);
+			await currentClient.save();
 			res.status(200);
 		} catch (error) {
 			res.status(500);
@@ -65,9 +65,9 @@ router.put('/follow/:username', checkAuthenticated, async (req, res) => {
 
 // Unfollow a user
 router.put('/unfollow/:username', checkAuthenticated, async (req, res) => {
-	const user = req.user;
-	user.following = user.following.filter((user) => user.username != req.params.username);
-	await user.save();
+	const currentClient = req.user;
+	currentClient.following = currentClient.following.filter((user) => user.username != req.params.username);
+	await currentClient.save();
 	res.redirect(`/users/${req.params.username}`);
 });
 
@@ -91,10 +91,10 @@ router.post('/signup', checkNotAuthenticated, async (req, res) => {
 		user.password = hashedPassword;
 		await user.save();
 		res.status(201);
-		res.render('users/login', { user: user, error: null, message: 'Success! Please log in to continue' });
+		res.render('users/login', { currentClient: user, error: null, message: 'Success! Please log in to continue' });
 	} catch (error) {
 		res.status(400);
-		res.render('users/signup', { user: user, error: error });
+		res.render('users/signup', { currentClient: user, error: error });
 	}
 });
 

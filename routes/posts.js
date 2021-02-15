@@ -10,7 +10,7 @@ import { checkAuthenticated, authUser, renderEditDeleteButtons } from '../basicA
 // Routes
 router.get('/new', checkAuthenticated, (req, res) => {
 	res.status(200);
-	res.render('posts/new', { post: new Post(), user: req.user });
+	res.render('posts/new', { post: new Post(), currentClient: req.user });
 });
 
 router.get('/edit/:id', checkAuthenticated, async (req, res) => {
@@ -36,25 +36,30 @@ router.get('/:slug', async (req, res) => {
 		comments = await Comment.find({ post: post }).populate('author');
 		let renderButtons = renderEditDeleteButtons(req.user, post);
 		res.status(200);
-		const user = req.user || new User();
-		res.render('posts/show', { post: post, comments: comments, renderButtons: renderButtons, user: user });
+		// const currentClient = req.user || new User();
+		res.render('posts/show', {
+			post: post,
+			comments: comments,
+			renderButtons: renderButtons,
+			currentClient: req.user,
+		});
 	}
 });
 
 // Create a new post
 router.post('/', checkAuthenticated, async (req, res) => {
-	const user = req.user;
+	const currentClient = req.user;
 	let post = new Post({
 		title: req.body.title,
 		description: req.body.description,
 		markdown: req.body.markdown,
-		author: user,
+		author: currentClient,
 	});
 
 	try {
 		post = await post.save();
-		user.posts.push(post);
-		await user.save();
+		currentClient.posts.push(post);
+		await currentClient.save();
 		res.status(201);
 		res.redirect(`/posts/${post.slug}`);
 	} catch {
@@ -92,6 +97,7 @@ router.delete('/comments/:id', checkAuthenticated, async (req, res) => {
 		res.render('invalid-permission');
 	}
 });
+
 // Update a post
 router.put('/:id', checkAuthenticated, async (req, res) => {
 	let post = await Post.findById(req.params.id);

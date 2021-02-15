@@ -13,9 +13,11 @@ router.get('/', async (req, res) => {
 	// await Post.deleteMany({});
 	// await User.deleteMany({});
 	const posts = await Post.find().sort({ createdAt: 'desc' }).populate('author');
+	let currentClient;
+	if (req.user) currentClient = req.user;
 	res.status(200);
 	res.render('index', {
-		user: req.user,
+		currentClient: currentClient,
 		posts: posts,
 	});
 });
@@ -23,7 +25,7 @@ router.get('/', async (req, res) => {
 //login page
 router.get('/login', checkNotAuthenticated, (req, res) => {
 	res.status(200);
-	res.render('users/login', { user: new User(), error: null, message: null });
+	res.render('users/login', { currentClient: new User(), error: null, message: null });
 });
 
 router.post(
@@ -44,7 +46,7 @@ router.delete('/logout', (req, res) => {
 //signup page
 router.get('/signup', checkNotAuthenticated, (req, res) => {
 	res.status(200);
-	res.render('users/signup', { user: new User(), error: null });
+	res.render('users/signup', { currentClient: new User(), error: null });
 });
 
 // 404 page

@@ -4,7 +4,7 @@
 		<h1><%= user.username %></h1>
 		<h3><%= user.location %></h3>
 
-		<% if((loggedInUser && !alreadyFollowing) || !loggedInUser) { %>
+		<% if((currentClient && !alreadyFollowing) || !currentClient) { %>
 		<form action="/users/follow/<%= user.username %>?_method=PUT" method="POST">
 			<button type="submit" class="btn btn-primary">Follow</button>
 		</form>
@@ -31,7 +31,7 @@
 					<span><%= post.commentsCount %> comments</span>
 				</div>
 
-				<% if(loggedInUser && (loggedInUser.id == post.author.id || loggedInUser.role === 'admin')) {%>
+				<% if(currentClient && (currentClient.id == post.author.id || currentClient.role === 'admin')) {%>
 				<a href="posts/edit/<%= post.id %>" class="btn btn-info">Edit</a>
 				<form method="POST" action="/posts/<%= post.id %>?_method=DELETE" class="d-inline">
 					<button class="btn-danger btn" type="submit">Delete</button>

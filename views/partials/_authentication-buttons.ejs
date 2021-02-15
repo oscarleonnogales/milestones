@@ -1,0 +1,15 @@
+<% if(locals.currentClient && locals.currentClient.username != null) { %>
+<div class="buttons-container logged-in">
+	<div>
+		Welcome, <span><a href="/users/<%=currentClient.username%>"><%=currentClient.username%></a></span>
+	</div>
+	<form action="/logout?_method=DELETE" method="POST">
+		<button type="submit" class="btn btn-danger">Log Out</button>
+	</form>
+</div>
+<% } else { %>
+<div class="buttons-container">
+	<a href="/signup" class="btn btn-primary">Sign Up</a>
+	<a href="/login" class="btn btn-secondary">Log In</a>
+</div>
+<% } %>

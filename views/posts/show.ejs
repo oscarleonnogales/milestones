@@ -14,7 +14,7 @@
 		<a href="/users/<%=post.author.username %>"><%= post.author.username %></a>
 	</div>
 	<form method="POST" action="/posts/like/<%= post.id %>?_method=PUT">
-		<% if(user && post.likes.includes(user.id)) { %>
+		<% if(currentClient && post.likes.includes(currentClient.id)) { %>
 		<button type="submit" class="btn btn-danger">Dislike</button>
 		<% } else { %>
 		<button type="submit" class="btn btn-primary">Like</button>
@@ -35,8 +35,8 @@
 	<button class="btn btn-primary" type="submit">Comment</button>
 </form>
 <div class="container">
-	<% if(comments) {comments.forEach(comment => { %> <% if (user && (comment.author.id === user.id ||
-	user.role==='admin')) { %>
+	<% if(comments) {comments.forEach(comment => { %> <% if (currentClient && (comment.author.id === currentClient.id ||
+	currentClient.role==='admin')) { %>
 	<form action="/posts/comments/<%= comment.id %>?_method=DELETE" method="POST">
 		<button type="submit" class="btn btn-danger">&times;</button>
 	</form>
