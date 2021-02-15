@@ -1,3 +1,3 @@
-# Social Media Site
+# Project Sharing Site
 
-This project was one of the first full stack applications I've developed.
+Full stack application built using Node.js
