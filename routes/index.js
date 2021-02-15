@@ -3,9 +3,8 @@ const router = express.Router();
 const passport = require('passport');
 const Post = require('../models/post');
 const User = require('../models/user');
-const Comment = require('../models/comment');
 
-import { checkNotAuthenticated } from '../basicAuth';
+import { checkAuthenticated, checkNotAuthenticated } from '../basicAuth';
 
 //homepage with all posts
 router.get('/', async (req, res) => {
@@ -13,11 +12,10 @@ router.get('/', async (req, res) => {
 	// await Post.deleteMany({});
 	// await User.deleteMany({});
 	const posts = await Post.find().sort({ createdAt: 'desc' }).populate('author');
-	let currentClient;
-	if (req.user) currentClient = req.user;
+
 	res.status(200);
 	res.render('index', {
-		currentClient: currentClient,
+		currentClient: req.user,
 		posts: posts,
 	});
 });
@@ -25,7 +23,7 @@ router.get('/', async (req, res) => {
 //login page
 router.get('/login', checkNotAuthenticated, (req, res) => {
 	res.status(200);
-	res.render('users/login', { currentClient: new User(), error: null, message: null });
+	res.render('users/login');
 });
 
 router.post(
@@ -46,7 +44,15 @@ router.delete('/logout', (req, res) => {
 //signup page
 router.get('/signup', checkNotAuthenticated, (req, res) => {
 	res.status(200);
-	res.render('users/signup', { currentClient: new User(), error: null });
+	res.render('users/signup');
+});
+
+router.get('/profile', checkAuthenticated, async (req, res) => {
+	const user = await (await User.findOne({ username: req.user.username })).populate('posts');
+	res.render('users/profile', {
+		user: user,
+		currentClient: req.user,
+	});
 });
 
 // 404 page

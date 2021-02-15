@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
 	}
 	try {
 		const users = await User.find(searchOptions);
-		res.render('users/index', { users: users, searchOptions: req.query });
+		res.render('users/index', { users: users, searchOptions: req.query, currentClient: req.user });
 	} catch {
 		res.redirect('/');
 	}

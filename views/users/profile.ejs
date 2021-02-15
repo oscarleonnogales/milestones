@@ -4,11 +4,12 @@
 		<h1><%= user.username %></h1>
 		<h3><%= user.location %></h3>
 
-		<% if((currentClient && !alreadyFollowing) || !currentClient) { %>
+		<% if(locals.currentClient && locals.currentClient.username === user.username) { %> <% } else
+		if((locals.currentClient && !locals.alreadyFollowing) || !locals.currentClient) { %>
 		<form action="/users/follow/<%= user.username %>?_method=PUT" method="POST">
 			<button type="submit" class="btn btn-primary">Follow</button>
 		</form>
-		<% } else {%>
+		<% } else { %>
 		<form action="/users/unfollow/<%= user.username %>?_method=PUT" method="POST">
 			<button type="submit" class="btn btn-danger">Unfollow</button>
 		</form>
