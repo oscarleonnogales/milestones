@@ -1,0 +1,10 @@
+.profile__location {
+	display: flex;
+	align-items: center;
+	font-size: 1.5rem;
+}
+
+.profile__location > svg {
+	width: 1em;
+	height: 1em;
+}

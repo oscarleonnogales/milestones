@@ -18,6 +18,8 @@ const userSchema = new mongoose.Schema({
 	},
 	location: {
 		type: String,
+		default: 'Milky Way Galaxy',
+		required: true,
 	},
 	password: {
 		type: String,

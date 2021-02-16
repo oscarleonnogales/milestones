@@ -9,3 +9,8 @@ body {
 .post-container:hover {
 	border: 1px solid #0b5ed7;
 }
+
+.btn > svg {
+	width: 1.25em;
+	height: 1.25em;
+}

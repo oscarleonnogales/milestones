@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
+const Post = require('../models/post');
 import { checkAuthenticated, checkNotAuthenticated } from '../basicAuth';
 
 // All users
@@ -23,8 +24,9 @@ router.get('/:username', async (req, res) => {
 	let user;
 	let currentClient;
 	try {
-		user = await User.findOne({ username: req.params.username }).populate('posts');
+		user = await User.findOne({ username: req.params.username });
 		if (user) {
+			const postsByUser = await Post.find({ author: user });
 			let alreadyFollowing = false;
 			if (req.user) {
 				req.user.following.forEach((user) => {
@@ -35,11 +37,13 @@ router.get('/:username', async (req, res) => {
 			res.status(200);
 			res.render('users/profile', {
 				user: user,
+				posts: postsByUser,
 				currentClient: currentClient,
 				alreadyFollowing: alreadyFollowing,
 			});
 		} else throw new Error("User doesn't exist");
 	} catch (error) {
+		console.log(error);
 		res.status(404);
 		res.render('404', { error: error });
 	}

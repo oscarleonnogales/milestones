@@ -26,6 +26,35 @@ router.get('/login', checkNotAuthenticated, (req, res) => {
 	res.render('users/login');
 });
 
+//signup page
+router.get('/signup', checkNotAuthenticated, (req, res) => {
+	res.status(200);
+	res.render('users/signup');
+});
+
+router.get('/profile', checkAuthenticated, async (req, res) => {
+	const user = await User.findOne({ username: req.user.username });
+	const postsByUser = await Post.find({ author: user });
+	res.render('users/profile', {
+		user: user,
+		posts: postsByUser,
+		currentClient: req.user,
+	});
+});
+
+router.get('/settings', checkAuthenticated, async (req, res) => {
+	try {
+		const user = await User.findOne({ username: req.user.username });
+		res.render('users/settings', {
+			user: user,
+			currentClient: req.user,
+		});
+	} catch {
+		res.status(500);
+		res.redirect('/');
+	}
+});
+
 router.post(
 	'/login',
 	passport.authenticate('local', {
@@ -39,20 +68,6 @@ router.delete('/logout', (req, res) => {
 	req.logOut();
 	res.status(200);
 	res.redirect('/');
-});
-
-//signup page
-router.get('/signup', checkNotAuthenticated, (req, res) => {
-	res.status(200);
-	res.render('users/signup');
-});
-
-router.get('/profile', checkAuthenticated, async (req, res) => {
-	const user = await (await User.findOne({ username: req.user.username })).populate('posts');
-	res.render('users/profile', {
-		user: user,
-		currentClient: req.user,
-	});
 });
 
 // 404 page
