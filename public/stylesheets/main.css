@@ -1,5 +1,20 @@
+:root {
+	--header-icon-size: 2em;
+	/* --header-background-color: #181818; */
+	--main-background-color: white;
+	--main-border-color: rgba(0, 0, 0, 0.125);
+	--header-background-color: lightgrey;
+	--header-icon-color: #0b5ed7;
+}
+
 body {
-	background: #e2e2e2;
+	display: grid;
+	grid-template-columns: calc(var(--header-icon-size) * 2) 1fr;
+}
+
+#body-container {
+	padding: 3rem;
+	padding-top: 1.5rem;
 }
 
 .post-container {
@@ -8,6 +23,10 @@ body {
 
 .post-container:hover {
 	border: 1px solid #0b5ed7;
+}
+
+.post-preview-icon {
+	fill: red;
 }
 
 .btn > svg {

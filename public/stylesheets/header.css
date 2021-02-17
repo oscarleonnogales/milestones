@@ -1,31 +1,26 @@
-:root {
-	--icon-size: 2em;
-	/* --background-color-value: #181818; */
-	--background-color-value: white;
-}
-
 .vertical-navbar {
-	position: absolute;
-	top: 0;
-	bottom: 0;
+	position: fixed;
+	height: 100vh;
 	left: 0;
-	padding: 1em;
-	display: grid;
-	grid-template-rows: 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
-	background: var(--background-color-value);
-	border-right: 1px solid rgba(0, 0, 0, 0.125);
+	padding: calc(var(--header-icon-size) * 0.5);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	background: var(--header-background-color);
+	border-right: 1px solid var(--main-border-color);
 }
 
 .navbar-link {
 	position: relative;
-	width: var(--icon-size);
-	height: var(--icon-size);
+	width: var(--header-icon-size);
+	height: var(--header-icon-size);
 }
 
 .navbar-icon {
 	display: block;
 	width: 100%;
 	height: 100%;
+	fill: var(--header-icon-color);
 }
 
 .navbar-text {
@@ -37,7 +32,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: var(--background-color-value);
+	background: var(--header-background-color);
 	opacity: 0;
 	transition: opacity 0.35s ease-in-out;
 }

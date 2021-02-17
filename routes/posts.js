@@ -78,6 +78,8 @@ router.post('/comments/:id', checkAuthenticated, async (req, res) => {
 			post: post,
 		});
 		await newComment.save();
+		post.commentsCount++;
+		await post.save();
 		res.status(201);
 	} catch (error) {
 		res.status(500);
@@ -89,9 +91,17 @@ router.post('/comments/:id', checkAuthenticated, async (req, res) => {
 router.delete('/comments/:id', checkAuthenticated, async (req, res) => {
 	const comment = await Comment.findById(req.params.id);
 	if (authUser(req.user, comment)) {
-		await comment.deleteOne({ id: comment.id });
-		res.status(204);
-		res.redirect('/');
+		try {
+			await comment.deleteOne({ id: comment.id });
+			const post = await Post.findById(comment.post);
+			post.commentsCount--;
+			await post.save();
+			res.status(204);
+			res.redirect(`/posts/${post.slug}`);
+		} catch {
+			res.status(500);
+			res.redirect('/');
+		}
 	} else {
 		res.status(403);
 		res.render('invalid-permission');

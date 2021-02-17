@@ -4,8 +4,8 @@ const marked = require('marked');
 const createDomPurify = require('dompurify');
 const { JSDOM } = require('jsdom');
 const domPurify = createDomPurify(new JSDOM().window);
-import User from './user';
-import Comment from './comment';
+const User = require('./user');
+const Comment = require('./comment');
 
 const postSchema = new mongoose.Schema({
 	title: {

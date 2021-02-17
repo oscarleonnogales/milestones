@@ -11,11 +11,12 @@
 		<link href="/stylesheets/bootstrap.css" rel="stylesheet" type="text/css" />
 		<link rel="shortcut icon" href="#" />
 		<script src="/scripts/homepage.js" defer></script>
-		<title>BLOGSITE</title>
+		<title>Project Sharing Site</title>
 	</head>
 	<body>
 		<%- include('../partials/_header.ejs')%>
-		<div class="container"><%- body %></div>
+		<div class="empty"></div>
+		<div id="body-container"><%- body %></div>
 		<%- include('../partials/_authentication-buttons.ejs') %>
 	</body>
 </html>
