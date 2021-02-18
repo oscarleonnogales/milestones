@@ -1,15 +1,11 @@
 :root {
 	--header-icon-size: 2em;
-	/* --header-background-color: #181818; */
-	--main-background-color: white;
-	--main-border-color: rgba(0, 0, 0, 0.125);
-	--header-background-color: lightgrey;
-	--header-icon-color: #0b5ed7;
 }
 
 body {
 	display: grid;
 	grid-template-columns: calc(var(--header-icon-size) * 2) 1fr;
+	background: var(--main-background-color);
 }
 
 #body-container {

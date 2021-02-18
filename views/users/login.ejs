@@ -1,4 +1,3 @@
-<h2 class="text-center mt-3">Log In</h2>
 <% if(messages.error) { %>
 <div class="d-flex justify-content-center">
 	<div class="alert alert-danger">
@@ -38,9 +37,9 @@
 	</div>
 </div>
 <% } %>
-<div class="text-danger text-center"></div>
-<div class="container d-flex justify-content-center">
-	<form action="/login" method="POST" class="w-50">
+<div class="card container d-flex justify-content-center mb-2 w-50">
+	<h2 class="text-center mt-3">Log In</h2>
+	<form action="/login" method="POST">
 		<div class="form-group">
 			<label for="username">Username</label>
 			<input
@@ -56,13 +55,13 @@
 			<label for="password">Password</label>
 			<input required type="password" id="password" name="password" class="form-control" />
 		</div>
-		<div class="container d-flex justify-content-center">
+		<div class="container d-flex justify-content-center mb-3">
 			<a href="/" class="btn btn-secondary mt-4">Cancel</a>
 			<div style="width: 1rem"></div>
 			<button class="btn-primary btn mt-4" type="submit">Log In</button>
 		</div>
-		<div class="container d-flex justify-content-center">
-			<a href="/signup" class="d-inline-block">Don't have an account? Sign Up</a>
-		</div>
 	</form>
+</div>
+<div class="container d-flex justify-content-center">
+	<a href="/signup" class="d-inline-block">Don't have an account? Sign Up</a>
 </div>
