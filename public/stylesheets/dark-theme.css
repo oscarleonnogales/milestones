@@ -1,3 +1,45 @@
 :root {
-	--header-background-color: #181818;
+	/* Main App, General Colors */
+	--main-background-color: rgb(34, 34, 34);
+	--main-border-color: rgb(52, 152, 219);
+	--main-text-color: rgb(255, 255, 255);
+	--main-icon-color: rgb(52, 152, 219);
+
+	--text-muted-color: #6c757d;
+
+	/* Navbar */
+	--secundary-background-color: rgb(48, 48, 48);
+
+	/* Post Preview */
+}
+
+.btn-outline-primary > svg {
+	fill: #0d6efd;
+}
+.btn-outline-primary:hover > svg {
+	fill: #fff;
+}
+.btn-outline-secondary > svg {
+	fill: #6c757d;
+}
+.btn-outline-secondary:hover > svg {
+	fill: #fff;
+}
+.btn-outline-info > svg {
+	fill: #0dcaf0;
+}
+.btn-outline-info:hover > svg {
+	fill: #000;
+}
+.btn-outline-danger > svg {
+	fill: #dc3545;
+}
+.btn-outline-danger:hover > svg {
+	fill: #fff;
+}
+.btn-outline-success > svg {
+	fill: #198754;
+}
+.btn-outline-success:hover > svg {
+	fill: #fff;
 }
