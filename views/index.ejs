@@ -11,5 +11,7 @@
 	</svg>
 	New Post
 </a>
-<% } posts.forEach(post => { %> <%- include('./partials/_post-preview.ejs', {post:post, author: post.author}) %> <% })
-%>
+<div class="posts-container">
+	<% } posts.forEach(post => { %> <%- include('./partials/_post-preview.ejs', {post:post, author: post.author}) %> <%
+	})%>
+</div>

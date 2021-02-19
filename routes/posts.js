@@ -13,11 +13,12 @@ router.get('/new', checkAuthenticated, (req, res) => {
 	res.render('posts/new', { post: new Post(), currentClient: req.user });
 });
 
+// Edit a post
 router.get('/edit/:id', checkAuthenticated, async (req, res) => {
 	const post = await Post.findById(req.params.id);
 	if (authUser(req.user, post)) {
 		res.status(200);
-		res.render('posts/edit', { post: post });
+		res.render('posts/edit', { post: post, currentClient: req.user });
 	} else {
 		res.status(403);
 		res.render('invalid-permission');
