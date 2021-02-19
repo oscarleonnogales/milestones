@@ -1,7 +1,8 @@
 /* Post Preview */
 .post-preview-container {
 	border: 1px solid var(--main-border-color);
-	width: 75%;
+	min-width: 200px;
+	max-width: 75vw;
 	transition: 0.2s ease-in;
 }
 
@@ -61,7 +62,3 @@
 	margin-right: 0.25rem;
 }
 /* Post Page */
-.posts-container {
-	width: 100%;
-	margin-left: 5rem;
-}

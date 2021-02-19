@@ -19,6 +19,10 @@ body {
 	background: var(--main-background-color);
 }
 
+#body-container {
+	padding: 3rem;
+}
+
 .d-flex {
 	display: flex;
 }

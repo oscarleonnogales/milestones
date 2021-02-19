@@ -6,10 +6,12 @@
 	<form action="/logout?_method=DELETE" method="POST">
 		<button type="submit" class="btn btn-outline-danger">Log Out</button>
 	</form>
+	<button class="btn btn-outline-info" data-toggle-theme-button>Toggle Theme</button>
 </div>
 <% } else { %>
 <div class="buttons-container">
 	<a href="/signup" class="btn btn-outline-primary">Sign Up</a>
 	<a href="/login" class="btn btn-outline-secondary">Log In</a>
+	<button class="btn btn-outline-info" data-toggle-theme-button>Toggle Theme</button>
 </div>
 <% } %>
