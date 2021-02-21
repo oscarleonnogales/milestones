@@ -1,5 +1,21 @@
 :root {
 	--header-icon-size: 2em;
+
+	/* Buttons Colors */
+	--light-text-color: #fff;
+	--dark-text-color: #000;
+
+	--btn-primary-color: #0d6efd;
+	--btn-secondary-color: #6c757d;
+	--btn-danger-color: #dc3545;
+	--btn-info-color: #0dcaf0;
+	--btn-success-color: #198754;
+
+	--btn-primary-hover-color: #0b5ed7;
+	--btn-secondary-hover-color: #5c636a;
+	--btn-danger-hover-color: #bb2d3b;
+	--btn-info-hover-color: #41d8f7;
+	--btn-success-hover-color: #157347;
 }
 
 *,
@@ -23,8 +39,36 @@ body {
 	padding: 3rem;
 }
 
-.d-flex {
-	display: flex;
+/* Authentication Buttons */
+.buttons-container {
+	position: absolute;
+	top: 1rem;
+	right: 2rem;
+}
+
+.buttons-container.logged-in {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	align-items: center;
+	gap: 10px;
+}
+
+/* Buttons */
+.btn {
+	display: inline-block;
+	font-weight: 400;
+	line-height: 1.5;
+	text-align: center;
+	text-decoration: none;
+	background: transparent;
+	vertical-align: middle;
+	cursor: pointer;
+	outline: none;
+	padding: 0.375rem 0.75rem;
+	font-size: 1rem;
+	border-radius: 0.25rem;
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+		box-shadow 0.15s ease-in-out;
 }
 
 .btn > svg {
@@ -32,6 +76,11 @@ body {
 	height: 1.25em;
 	transition: fill 0.15s ease-in-out, background-color 0.15s ease-in-out;
 	vertical-align: sub;
+}
+
+/* Bootstrap Classes */
+.d-flex {
+	display: flex;
 }
 
 .mb-1 {

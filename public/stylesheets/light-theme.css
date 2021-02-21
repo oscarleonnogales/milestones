@@ -1,6 +1,90 @@
 :root {
 	--main-background-color: white;
 	--main-border-color: rgba(0, 0, 0, 0.125);
-	--header-background-color: rgb(36, 41, 46);
-	--header-icon-color: #0b5ed7;
+	--main-text-color: rgb(255, 255, 255);
+	--main-icon-color: rgb(52, 152, 219);
+
+	--text-muted-color: #6c757d;
+
+	/* Navbar */
+	--secundary-background-color: rgb(48, 48, 48);
+
+	/* Post Preview */
+}
+.btn {
+	color: var(--light-text-color);
+}
+
+.btn-primary {
+	background-color: var(--btn-primary-color) !important;
+	border: 1px solid var(--btn-primary-color);
+}
+
+.btn-secondary {
+	background-color: var(--btn-secondary-color) !important;
+	border: 1px solid var(--btn-secondary-color);
+}
+
+.btn-danger {
+	background-color: var(--btn-danger-color) !important;
+	border: 1px solid var(--btn-danger-color);
+}
+
+.btn-success {
+	background-color: var(--btn-success-color) !important;
+	border: 1px solid var(--btn-success-color);
+}
+
+.btn-info {
+	background-color: var(--btn-info-color) !important;
+	border: 1px solid var(--btn-info-color);
+}
+
+.btn-primary:hover {
+	background-color: var(--btn-primary-hover-color) !important;
+	border-color: var(--btn-primary-color);
+}
+
+.btn-secondary:hover {
+	background-color: var(--btn-secondary-hover-color) !important;
+	border-color: var(--btn-secondary-color);
+}
+
+.btn-danger:hover {
+	background-color: var(--btn-danger-hover-color) !important;
+	border-color: var(--btn-danger-color);
+}
+
+.btn-success:hover {
+	background-color: var(--btn-success-hover-color) !important;
+	border-color: var(--btn-success-color);
+}
+
+.btn-info:hover {
+	background-color: var(--btn-info-hover-color) !important;
+	border-color: var(--btn-info-color);
+}
+
+.btn-primary:focus {
+	box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.5);
+}
+
+.btn-secondary:focus {
+	box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.5);
+}
+
+.btn-danger:focus {
+	box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.5);
+}
+
+.btn-success:focus {
+	box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.5);
+}
+
+.btn-info:focus {
+	box-shadow: 0 0 0 0.25rem rgba(13, 202, 240, 0.5);
+}
+
+.btn > svg {
+	fill: var(--light-text-color);
 }
