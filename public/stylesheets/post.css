@@ -1,6 +1,8 @@
 /* Post Preview */
 .post-preview-container {
 	border: 1px solid var(--main-border-color);
+	border-radius: 0.25rem;
+	overflow: hidden;
 	min-width: 200px;
 	max-width: 90vw;
 	transition: 0.2s ease-in;

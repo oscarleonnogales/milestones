@@ -95,7 +95,7 @@ router.post('/signup', checkNotAuthenticated, async (req, res) => {
 		user.password = hashedPassword;
 		await user.save();
 		res.status(201);
-		res.render('users/login', { currentClient: user, error: null, message: 'Success! Please log in to continue' });
+		res.render('users/login', { error: null, message: 'Success! Please log in to continue' });
 	} catch (error) {
 		res.status(400);
 		res.render('users/signup', { currentClient: user, error: error });
