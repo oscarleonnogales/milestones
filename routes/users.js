@@ -98,7 +98,7 @@ router.post('/signup', checkNotAuthenticated, async (req, res) => {
 		res.render('users/login', { error: null, message: 'Success! Please log in to continue' });
 	} catch (error) {
 		res.status(400);
-		res.render('users/signup', { currentClient: user, error: error });
+		res.render('users/signup', { error: error });
 	}
 });
 

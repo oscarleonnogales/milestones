@@ -11,15 +11,33 @@ const confirmIcon = document.querySelector('[data-confirm-input-icon]');
 const passwordHelpBlock = document.querySelector('[data-password-help-block]');
 passwordHelpBlock.style.display = 'none';
 
+const closeErrorButton = document.querySelector('[data-close-error-btn]');
+const closeErrorDiv = document.querySelector('[data-close-error-div]');
+closeErrorButton.addEventListener('click', () => {
+	closeErrorDiv.style.display = 'none';
+});
+
 usernameInput.addEventListener('input', () => {
-	usernameIcon.classList.add('active');
+	if (usernameInput.value != '') {
+		usernameIcon.classList.add('active');
+	} else {
+		usernameIcon.classList.remove('active');
+	}
 });
 
 passwordInput.addEventListener('input', () => {
 	passwordHelpBlock.style.display = 'inline';
-	passwordIcon.classList.add('active');
+	if (passwordInput.value != '') {
+		passwordIcon.classList.add('active');
+	} else {
+		passwordIcon.classList.remove('active');
+	}
 });
 
 confirmInput.addEventListener('input', () => {
-	confirmIcon.classList.add('active');
+	if (confirmInput.value != '') {
+		confirmIcon.classList.add('active');
+	} else {
+		confirmIcon.classList.remove('active');
+	}
 });

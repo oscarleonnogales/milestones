@@ -114,6 +114,32 @@ input[type='textarea'] {
 	border-radius: 0.25rem;
 }
 
+.close-alert-btn {
+	position: absolute;
+	top: 0;
+	right: 0;
+	transform: translateY(-2px);
+
+	color: inherit;
+	width: 1.5rem;
+	height: 1.5rem;
+	outline: none;
+	cursor: pointer;
+	z-index: 5;
+	font-size: 1.2rem;
+	background: none;
+	border: none;
+}
+
+.close-alert-btn:hover {
+	font-weight: bold;
+}
+
+.close-alert-success {
+	border: 1px solid #0f5132;
+	background-color: #d1e7dd;
+}
+
 .alert > svg {
 	vertical-align: sub;
 	width: 1rem;

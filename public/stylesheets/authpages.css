@@ -48,7 +48,7 @@
 }
 
 .form-input-icon.active {
-	fill: var(--light-text-color) !important;
+	fill: var(--main-icon-color) !important;
 }
 
 .auth-input {
