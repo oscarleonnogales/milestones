@@ -7,7 +7,12 @@
 	flex-direction: column;
 	justify-content: space-evenly;
 	background: var(--secundary-background-color);
+	transition: 0.2s ease-in;
 	border-right: 1px solid var(--main-border-color);
+}
+
+.vertical-navbar:hover {
+	border-color: var(--main-icon-color);
 }
 
 .navbar-link {

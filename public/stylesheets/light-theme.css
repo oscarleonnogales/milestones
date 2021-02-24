@@ -11,6 +11,29 @@
 
 	/* Post Preview */
 }
+
+.moon-icon {
+	opacity: 0;
+}
+
+.sun-icon {
+	opacity: 1;
+}
+
+.dropdown-btn {
+	background: var(--btn-primary-color);
+	color: var(--light-text-color);
+	border: none;
+}
+
+.dropdown-btn > svg {
+	fill: var(--light-text-color) !important;
+}
+
+.dropdown-btn:hover {
+	background: var(--btn-primary-hover-color);
+}
+
 .btn {
 	color: var(--light-text-color);
 }

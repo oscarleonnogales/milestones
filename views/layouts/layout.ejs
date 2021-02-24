@@ -11,12 +11,14 @@
 		<link href="/stylesheets/post.css" rel="stylesheet" type="text/css" />
 		<link rel="shortcut icon" href="#" />
 		<script src="/scripts/themeToggle.js" defer></script>
+		<script src="/scripts/homepage.js" defer></script>
 		<title>Project Sharing Site</title>
 	</head>
 	<body>
 		<%- include('../partials/_header.ejs')%>
 		<div class="empty"></div>
 		<div id="body-container"><%- body %></div>
-		<%- include('../partials/_authentication-buttons.ejs') %>
+		<div class="overlay" data-overlay></div>
+		<%- include('../partials/_navbar-buttons.ejs') %>
 	</body>
 </html>

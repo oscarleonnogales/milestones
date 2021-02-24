@@ -1,6 +1,6 @@
 :root {
 	--main-background-color: rgb(34, 34, 34);
-	--main-border-color: rgb(52, 152, 219);
+	--main-border-color: #6c757d;
 	--main-text-color: rgb(255, 255, 255);
 	--main-icon-color: rgb(52, 152, 219);
 
@@ -12,6 +12,26 @@
 	/* Forms */
 	--input-background-color: rgb(48, 48, 48);
 	/* Post Preview */
+
+	--sun-icon-opacity: 0;
+	--moon-icon-opacity: 1;
+}
+
+.moon-icon {
+	opacity: 1;
+}
+
+.sun-icon {
+	opacity: 0;
+}
+
+.dropdown-btn {
+	border: 1px solid var(--btn-primary-color);
+	background: none;
+}
+
+.dropdown-btn:hover {
+	background: var(--btn-primary-color);
 }
 
 .btn-primary {

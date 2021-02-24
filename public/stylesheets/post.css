@@ -1,7 +1,7 @@
 /* Post Preview */
 .post-preview-container {
 	border: 1px solid var(--main-border-color);
-	border-radius: 0.25rem;
+	border-radius: var(--border-radius);
 	overflow: hidden;
 	min-width: 200px;
 	max-width: 90vw;
@@ -9,7 +9,7 @@
 }
 
 .post-preview-container:hover {
-	border: 1px solid var(--text-muted-color);
+	border: 1px solid var(--main-icon-color);
 }
 
 .post-preview-title {

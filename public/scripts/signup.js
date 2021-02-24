@@ -13,9 +13,18 @@ passwordHelpBlock.style.display = 'none';
 
 const closeErrorButton = document.querySelector('[data-close-error-btn]');
 const closeErrorDiv = document.querySelector('[data-close-error-div]');
-closeErrorButton.addEventListener('click', () => {
-	closeErrorDiv.style.display = 'none';
-});
+
+if (closeErrorDiv) {
+	closeErrorDiv.addEventListener('mouseenter', () => {
+		closeErrorButton.style.display = 'inline-block';
+	});
+	closeErrorDiv.addEventListener('mouseleave', () => {
+		closeErrorButton.style.display = 'none';
+	});
+	closeErrorButton.addEventListener('click', () => {
+		closeErrorDiv.style.display = 'none';
+	});
+}
 
 usernameInput.addEventListener('input', () => {
 	if (usernameInput.value != '') {
