@@ -84,7 +84,8 @@ body {
 	border-radius: 50%;
 }
 
-.dropdown-btn:hover > svg {
+.dropdown-btn:hover > svg,
+.dropdown-btn.active > svg {
 	fill: var(--light-text-color);
 }
 
@@ -277,6 +278,13 @@ textarea {
 	appearance: none;
 	border-radius: var(--border-radius);
 	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+input[type='text']:focus,
+input[type='password']:focus,
+textarea:focus {
+	border: 1px solid var(--main-icon-color);
+	outline: none;
 }
 
 /* Bootstrap Classes */

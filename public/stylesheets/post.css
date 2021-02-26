@@ -6,10 +6,12 @@
 	min-width: 200px;
 	max-width: 90vw;
 	transition: 0.2s ease-in;
+	box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.5);
 }
 
 .post-preview-container:hover {
 	border: 1px solid var(--main-icon-color);
+	transform: translateY(-2px);
 }
 
 .post-preview-title {

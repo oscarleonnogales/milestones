@@ -30,7 +30,8 @@
 	background: none;
 }
 
-.dropdown-btn:hover {
+.dropdown-btn:hover,
+.dropdown-btn.active {
 	background: var(--btn-primary-color);
 }
 

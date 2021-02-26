@@ -18,6 +18,11 @@
 				<a href="/settings" class="dropdown-link">Settings</a>
 			</li>
 			<li class="dropdown-item">
+				<form action="/logout?_method=DELETE" method="POST">
+					<button type="submit" class="dropdown-link">Log Out</button>
+				</form>
+			</li>
+			<li class="dropdown-item">
 				<div class="theme-icon-container">
 					<svg xmlns="http://www.w3.org/2000/svg" class="bi bi-brightness-high theme-icon sun-icon" viewBox="0 0 16 16">
 						<path
@@ -35,11 +40,6 @@
 					<input type="checkbox" data-toggle-theme-checkbox />
 					<span class="slider round"></span>
 				</label>
-			</li>
-			<li class="dropdown-item">
-				<form action="/logout?_method=DELETE" method="POST">
-					<button type="submit" class="dropdown-link">Log Out</button>
-				</form>
 			</li>
 		</ul>
 	</div>
