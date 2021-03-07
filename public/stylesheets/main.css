@@ -424,3 +424,7 @@ textarea:focus {
 .mr-4 {
 	margin-right: 2rem;
 }
+
+.text-muted {
+	color: var(--text-muted-color) !important;
+}

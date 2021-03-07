@@ -29,6 +29,7 @@
 		</div>
 	</div>
 
-	<% if(locals.currentClient && (currentClient.id == author.id || currentClient.role === 'admin')) {%> <%-
-	include('_edit-delete-post-buttons.ejs', {post: post}) %> <% } %>
+	<% if(locals.currentClient && (currentClient.id == author.id || currentClient.role === 'admin')) {%>
+	<div class="mb-1 d-flex"><%-include('_edit-delete-post-buttons.ejs', {post: post}) %></div>
+	<% } %>
 </div>

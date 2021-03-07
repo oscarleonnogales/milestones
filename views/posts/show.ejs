@@ -1,10 +1,10 @@
-<div class="container d-flex">
-	<a href="/" class="btn btn-primary" style="margin: 0.5rem">All Posts</a>
+<div class="post__buttons-container">
+	<a href="/" class="btn btn-primary">All Posts</a>
 	<% if(renderButtons) {%> <%- include('../partials/_edit-delete-post-buttons.ejs', {post: post}) %> <% } %>
 </div>
-<div class="container card" style="border: 1px solid #0b5ed7">
+<div class="post__post-body-container">
 	<h1 class="mb-1"><%=post.title %></h1>
-	<div class="text-muted mb-2">
+	<div class="post__post-body-subtitle">
 		Submitted on <%=post.createdAt.toLocaleDateString() %> by
 		<a href="/users/<%=post.author.username %>"><%= post.author.username %></a>
 	</div>
@@ -46,21 +46,41 @@
 			<span><%= post.commentsCount %> comments</span>
 		</div>
 	</form>
-	<div><%- post.sanitizedHTML %></div>
+	<div class="post__post-markdown"><%- post.sanitizedHTML %></div>
 </div>
+<% if(locals.currentClient) { %>
 <form action="/posts/comments/<%= post.id %>" method="POST">
 	<label for="commentText">Comment</label>
-	<input type="text" name="commentText" id="commentText" class="form-control" />
+	<textarea name="commentText" id="commentText" class="mt-1 mb-2"></textarea>
 	<button class="btn btn-primary" type="submit">Comment</button>
 </form>
-<div class="container">
-	<% if(comments) {comments.forEach(comment => { %> <% if (currentClient && (comment.author.id === currentClient.id ||
-	currentClient.role==='admin')) { %>
-	<form action="/posts/comments/<%= comment.id %>?_method=DELETE" method="POST">
-		<button type="submit" class="btn btn-danger">&times;</button>
-	</form>
-	<% } %>
-	<div class="card-text"><%= comment.text %></div>
-	<div class="card-subtitle">by <a href="/users/<%= comment.author.username %>"><%= comment.author.username %></a></div>
+<% } if(post.commentsCount > 0) { %>
+<div class="post__comments-container">
+	<% if(comments) {comments.forEach(comment => { %>
+	<div class="post__comment">
+		<div class="post__comment-author">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				class="bi bi-person-circle post__comment-author-photo"
+				viewBox="0 0 16 16"
+			>
+				<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+				<path
+					fill-rule="evenodd"
+					d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+				/>
+			</svg>
+			<a href="/users/<%= comment.author.username %>" class="text-muted"><%= comment.author.username %></a>
+		</div>
+		<div class="post__comment-content">
+			<div class="post__comment-text"><%= comment.text %></div>
+			<% if (currentClient && (comment.author.id === currentClient.id || currentClient.role==='admin')) { %>
+			<form action="/posts/comments/<%= comment.id %>?_method=DELETE" method="POST" class="post__comment-delete-form">
+				<button type="submit" class="btn btn-danger">Delete Comment</button>
+			</form>
+			<% } %>
+		</div>
+	</div>
 	<% })} %>
 </div>
+<% } %>
