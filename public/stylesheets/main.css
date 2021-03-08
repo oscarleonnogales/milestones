@@ -152,6 +152,12 @@ body {
 	color: var(--main-icon-color);
 }
 
+.icon {
+	width: 1.25rem;
+	height: 1.25rem;
+	fill: var(--main-icon-color);
+}
+
 .theme-icon-container {
 	position: relative;
 	display: flex;
