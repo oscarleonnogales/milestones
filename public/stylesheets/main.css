@@ -33,6 +33,10 @@
 	color: var(--main-text-color);
 }
 
+.page-header {
+	margin-bottom: 1rem;
+}
+
 .dropdown-link {
 	text-decoration: none;
 	cursor: pointer;

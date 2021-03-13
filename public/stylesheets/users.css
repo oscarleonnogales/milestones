@@ -1,0 +1,45 @@
+/* Users page */
+
+.users-display {
+	display: flex;
+	flex-wrap: wrap;
+	margin-left: 2rem;
+}
+
+/* User block */
+.user-container {
+	border: 1px solid var(--main-border-color);
+	margin-bottom: 1rem;
+	margin-right: 1rem;
+	display: flex;
+	transition: 0.2s ease-in;
+	padding: 0.5rem;
+	max-width: min-content;
+}
+
+.user-info,
+.user-details {
+	display: flex;
+	flex-direction: column;
+}
+
+.user-info {
+	justify-content: center;
+	align-items: center;
+	width: 6rem;
+	overflow: hidden;
+	margin-right: 0.5rem;
+}
+
+.user-details {
+	width: 10rem;
+}
+
+.user-pic {
+	width: 2.5rem;
+	height: 2.5rem;
+}
+
+.user-container:hover {
+	border-color: var(--main-icon-color);
+}
