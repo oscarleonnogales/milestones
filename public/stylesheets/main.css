@@ -88,6 +88,16 @@ body {
 	border-radius: 50%;
 }
 
+.dropdown-btn {
+	border: 1px solid var(--btn-primary-color);
+	background: none;
+}
+
+.dropdown-btn:hover,
+.dropdown-btn.active {
+	background: var(--btn-primary-color);
+}
+
 .dropdown-btn:hover > svg,
 .dropdown-btn.active > svg {
 	fill: var(--light-text-color);
@@ -102,11 +112,10 @@ body {
 .dropdown-items {
 	z-index: 10;
 	position: absolute;
-	left: 0;
+	left: -50px;
 	border-radius: var(--border-radius);
 	list-style: none;
 	margin-top: 1rem;
-	transform: translateX(-5rem);
 	padding: 1rem;
 	background-color: var(--secundary-background-color);
 	width: var(--dropdown-menu-width);
@@ -281,7 +290,7 @@ textarea {
 	font-size: 1rem;
 	font-weight: 400;
 	line-height: 1.5;
-	color: var(--light-text-color);
+	color: var(--input-text-color);
 	background-color: var(--input-background-color);
 	background-clip: padding-box;
 	border: 1px solid #ced4da;
@@ -290,10 +299,16 @@ textarea {
 	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+input[type='text']:hover,
+input[type='password']:hover,
+textarea:hover {
+	border: 1px solid var(--main-icon-color);
+}
+
 input[type='text']:focus,
 input[type='password']:focus,
 textarea:focus {
-	border: 1px solid var(--main-icon-color);
+	border: 2px solid var(--main-icon-color);
 	outline: none;
 }
 

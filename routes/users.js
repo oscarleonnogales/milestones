@@ -89,7 +89,6 @@ router.post('/signup', checkNotAuthenticated, async (req, res) => {
 		if (!comparePasswordInputs(passwordInput, confirmPasswordInput)) throw new Error('Passwords do not match');
 		const isUsernameUnique = await validateUsername(req.body.username);
 		if (!isUsernameUnique) throw new Error('Username is already taken');
-		// if (user.username.length > 10) throw new Error('Username must be less than 10 characters.');
 
 		const hashedPassword = await bcrypt.hash(passwordInput, 10);
 

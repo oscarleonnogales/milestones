@@ -11,10 +11,7 @@
 
 	/* Forms */
 	--input-background-color: rgb(48, 48, 48);
-	/* Post Preview */
-
-	--sun-icon-opacity: 0;
-	--moon-icon-opacity: 1;
+	--input-text-color: var(var(--light-text-color));
 }
 
 .moon-icon {
@@ -23,16 +20,6 @@
 
 .sun-icon {
 	opacity: 0;
-}
-
-.dropdown-btn {
-	border: 1px solid var(--btn-primary-color);
-	background: none;
-}
-
-.dropdown-btn:hover,
-.dropdown-btn.active {
-	background: var(--btn-primary-color);
 }
 
 .btn-primary {
