@@ -12,6 +12,13 @@
 	New Post
 </a>
 <div class="posts-container">
-	<% } posts.forEach(post => { %> <%- include('./partials/_post-preview.ejs', {post:post, author: post.author}) %> <%
-	})%>
+	<% } %> <% paginatedResults.results.forEach(post => { %> <%- include('./partials/_post-preview.ejs', {post:post,
+	author: post.author}) %> <% })%>
+	<div class="pagination-buttons-container">
+		<% if(paginatedResults.previous) { %>
+		<a href="/?page=<%= paginatedResults.previous.page %>" class="btn btn-primary">Previous Page</a>
+		<% } %> <% if(paginatedResults.next) { %>
+		<a href="/?page=<%= paginatedResults.next.page %>" class="btn btn-primary">Next Page</a>
+		<% } %>
+	</div>
 </div>

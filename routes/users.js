@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const Post = require('../models/post');
-import { checkAuthenticated, checkNotAuthenticated } from '../basicAuth';
+import { checkAuthenticated, checkNotAuthenticated } from '../middleware';
 
 // All users
 router.get('/', async (req, res) => {

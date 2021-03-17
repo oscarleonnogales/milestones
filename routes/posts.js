@@ -5,7 +5,7 @@ const User = require('../models/user');
 const Comment = require('../models/comment');
 
 // Middleware
-import { checkAuthenticated, authUser, renderEditDeleteButtons } from '../basicAuth';
+import { checkAuthenticated, authUser, renderEditDeleteButtons } from '../middleware';
 
 // Routes
 router.get('/new', checkAuthenticated, (req, res) => {
