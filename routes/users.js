@@ -106,10 +106,15 @@ router.post('/signup', checkNotAuthenticated, async (req, res) => {
 router.put('/settings/location/:id', checkAuthenticated, async (req, res) => {
 	const user = await User.findById(req.params.id);
 	if (user.id === req.user.id) {
-		user.location = req.body.location;
-		await user.save();
-		res.status(200);
-		res.render('users/settings', { currentClient: user, message: 'Saved New Location' });
+		try {
+			user.location = req.body.location;
+			await user.save();
+			res.status(200);
+			res.render('users/settings', { currentClient: user, message: 'Saved New Location' });
+		} catch (error) {
+			res.status(500);
+			res.render('users/settings', { currentClient: user, message: 'Saved New Location', error: error });
+		}
 	} else {
 		res.status(403);
 		res.redirect(`/users/${user.username}`);
@@ -120,22 +125,22 @@ router.put('/settings/location/:id', checkAuthenticated, async (req, res) => {
 router.put('/settings/password/:id', checkAuthenticated, async (req, res) => {
 	const user = await User.findById(req.params.id);
 	if (user.id === req.user.id) {
-		if (await bcrypt.compare(req.body.oldPassword, user.password)) {
-			const passwordInput = req.body.password;
-			const confirmPasswordInput = req.body.confirmPassword;
+		try {
+			if (await bcrypt.compare(req.body.oldPassword, user.password)) {
+				const passwordInput = req.body.password;
+				const confirmPasswordInput = req.body.confirmPassword;
 
-			if (!comparePasswordInputs(passwordInput, confirmPasswordInput)) throw new Error('New Passwords do not match');
-			const hashedPassword = await bcrypt.hash(passwordInput, 10);
-			try {
+				if (!comparePasswordInputs(passwordInput, confirmPasswordInput)) throw new Error('New Passwords do not match');
+				const hashedPassword = await bcrypt.hash(passwordInput, 10);
 				user.password = hashedPassword;
 				await user.save();
 				res.status(200);
 				res.render('users/settings', { currentClient: user, message: 'Saved New Password', error: null });
-			} catch (error) {
-				res.status(500);
-				res.redirect('users/settings', { currentClient: user, message: null, error: error });
-			}
-		} else throw new Error('Old Password Was Entered Incorrectly');
+			} else throw new Error('Old Password Was Entered Incorrectly');
+		} catch (error) {
+			res.status(500);
+			res.render('users/settings', { currentClient: user, message: null, error: error });
+		}
 	} else {
 		res.status(403);
 		res.redirect(`/users/${user.username}`);

@@ -1,7 +1,14 @@
 <script src="/scripts/settings.js" defer></script>
-<% if(message != null) {%>
+<% if(locals.error) { %>
 <div class="d-flex justify-content-center">
-	<div class="alert alert-success">
+	<div class="alert alert-danger" data-close-alert-div>
+		<%= error %>
+		<button class="close-alert-btn" data-close-alert-btn>&times;</button>
+	</div>
+</div>
+<% } else if(locals.message && message != null) {%>
+<div class="d-flex justify-content-center">
+	<div class="alert alert-success" data-close-alert-div>
 		<svg xmlns="http://www.w3.org/2000/svg" class="bi bi-shield-fill-check" viewBox="0 0 16 16">
 			<path
 				fill-rule="evenodd"
@@ -9,12 +16,13 @@
 			/>
 		</svg>
 		<%= message %>
+		<button class="close-alert-btn" data-close-alert-btn>&times;</button>
 	</div>
 </div>
 <% } %>
-<h1>User Settings</h1>
+<h1 class="page-header">User Settings</h1>
 <div>
-	<button class="search-dropdown-btn">
+	<button class="search-dropdown-btn settings__dropdown-btn" data-location-btn>
 		Change Location
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +39,7 @@
 			xmlns="http://www.w3.org/2000/svg"
 			fill="currentColor"
 			viewBox="0 0 16 16"
-			class="caret-up-location"
+			class="caret-up"
 			data-caret-up-location
 		>
 			<path
@@ -43,7 +51,7 @@
 		action="/users/settings/location/<%= currentClient.id %>?_method=PUT"
 		method="POST"
 		class="settings__form"
-		data-settings-location-form
+		data-location-form
 	>
 		<label for="location" class="settings__form-label">New Location</label>
 		<input type="text" name="location" placeholder="<%= currentClient.location %>" class="settings__form-input" />
@@ -51,7 +59,7 @@
 	</form>
 </div>
 <div>
-	<button class="search-dropdown-btn">
+	<button class="search-dropdown-btn settings__dropdown-btn" data-password-btn>
 		Change Password
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +76,7 @@
 			xmlns="http://www.w3.org/2000/svg"
 			fill="currentColor"
 			viewBox="0 0 16 16"
-			class="caret-up-password"
+			class="caret-up"
 			data-caret-up-password
 		>
 			<path
@@ -80,7 +88,7 @@
 		action="/users/settings/password/<%= currentClient.id %>?_method=PUT"
 		method="POST"
 		class="settings__form"
-		data-settings-password-form
+		data-password-form
 	>
 		<label for="oldPassword" class="settings__form-label">Old Password</label>
 		<input type="password" name="oldPassword" />
