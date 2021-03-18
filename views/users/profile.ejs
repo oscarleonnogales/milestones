@@ -1,7 +1,15 @@
-<div class="container">
-	<div class="user-details">
-		<div>PROFILE PIC</div>
-		<h1><%= user.username %></h1>
+<div class="profile-details">
+	<div>
+		<svg xmlns="http://www.w3.org/2000/svg" class="bi bi-person-circle profile-pic-svg" viewBox="0 0 16 16">
+			<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+			<path
+				fill-rule="evenodd"
+				d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+			/>
+		</svg>
+	</div>
+	<div>
+		<h1 class="profile__header"><%= user.username %></h1>
 		<div class="profile__location">
 			<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
 				<path
@@ -11,10 +19,10 @@
 			</svg>
 			<div class="profile__location-text"><%= user.location %></div>
 		</div>
-
+		<p class="profile-details-text">Member since <%= user.joinedAt.toLocaleDateString() %></p>
 		<% if(locals.currentClient && locals.currentClient.username === user.username) { %> <% } else
 		if((locals.currentClient && !locals.alreadyFollowing) || !locals.currentClient) { %>
-		<form action="/users/follow/<%= user.username %>?_method=PUT" method="POST">
+		<form action="/users/follow/<%= user.username %>?_method=PUT" method="POST" class="follow-form">
 			<button type="submit" class="btn btn-primary">
 				<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-check" viewBox="0 0 16 16">
 					<path
@@ -29,7 +37,7 @@
 			</button>
 		</form>
 		<% } else { %>
-		<form action="/users/unfollow/<%= user.username %>?_method=PUT" method="POST">
+		<form action="/users/unfollow/<%= user.username %>?_method=PUT" method="POST" class="follow-form">
 			<button type="submit" class="btn btn-danger">
 				<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-x" viewBox="0 0 16 16">
 					<path
@@ -45,7 +53,9 @@
 		</form>
 		<% } %>
 	</div>
-	<div class="posts-container">
-		<% posts.forEach(post => { %> <%- include('../partials/_post-preview.ejs', {post:post, author: user}) %> <% }) %>
-	</div>
+</div>
+
+<div class="posts-container">
+	<h3 class="posts-by-text">Posts by <%=user.username%></h3>
+	<% posts.forEach(post => { %> <%- include('../partials/_post-preview.ejs', {post:post, author: user}) %> <% }) %>
 </div>

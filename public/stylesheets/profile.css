@@ -1,10 +1,43 @@
 .profile__location {
 	display: flex;
 	align-items: center;
-	font-size: 1.5rem;
+}
+
+.profile__header {
+	font-size: 2.5rem;
 }
 
 .profile__location > svg {
-	width: 1em;
-	height: 1em;
+	width: 1.5em;
+	height: 1.5em;
+}
+
+.profile-pic-svg {
+	width: 10rem;
+	height: 10rem;
+	fill: var(--main-icon-color);
+	margin-right: 1.5rem;
+}
+
+.profile-details {
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 1rem;
+}
+
+.profile__location-text {
+	font-size: 1.5rem;
+}
+
+.profile-details-text {
+	font-size: 1.2rem;
+}
+
+.posts-by-text {
+	font-size: 1.5rem;
+	margin-bottom: 1rem;
+}
+
+.follow-form {
+	margin-top: 1rem;
 }

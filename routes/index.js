@@ -4,52 +4,13 @@ const passport = require('passport');
 const Post = require('../models/post');
 const User = require('../models/user');
 
-import { checkAuthenticated, checkNotAuthenticated } from '../middleware';
-
-function getPaginatedResults(Model) {
-	return async (req, res, next) => {
-		const page = parseInt(req.query.page) || 1;
-		const limit = parseInt(req.query.limit) || 10;
-
-		const startIndex = (page - 1) * limit;
-		const endIndex = page * limit;
-
-		const paginatedResults = {};
-		if (startIndex > 0) {
-			paginatedResults.previous = {
-				page: page - 1,
-				limit,
-			};
-		}
-		if (endIndex < (await Model.countDocuments().exec())) {
-			paginatedResults.next = {
-				page: page + 1,
-				limit,
-			};
-		}
-		try {
-			paginatedResults.results = await Model.find()
-				.sort({ createdAt: 'desc' })
-				.populate('author')
-				.limit(limit)
-				.skip(startIndex)
-				.exec();
-			res.paginatedResults = paginatedResults;
-			next();
-		} catch (error) {
-			res.status(500);
-			console.log(error);
-		}
-	};
-}
+import { checkAuthenticated, checkNotAuthenticated, getPaginatedResults } from '../middleware';
 
 //homepage with all posts
-router.get('/', getPaginatedResults(Post), async (req, res) => {
+router.get('/', getPaginatedResults(Post, {}), async (req, res) => {
 	// await Comment.deleteMany({});
 	// await Post.deleteMany({});
 	// await User.deleteMany({});
-
-	const posts = await Post.find().sort({ createdAt: 'desc' }).populate('author');
 
 	res.status(200);
 	res.render('index', {
@@ -71,10 +32,9 @@ router.get('/signup', checkNotAuthenticated, (req, res) => {
 });
 
 router.get('/profile', checkAuthenticated, async (req, res) => {
-	const user = await User.findOne({ username: req.user.username });
-	const postsByUser = await Post.find({ author: user });
+	const postsByUser = await Post.find({ author: req.user });
 	res.render('users/profile', {
-		user: user,
+		user: req.user,
 		posts: postsByUser,
 		currentClient: req.user,
 	});

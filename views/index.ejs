@@ -13,12 +13,5 @@
 </a>
 <div class="posts-container">
 	<% } %> <% paginatedResults.results.forEach(post => { %> <%- include('./partials/_post-preview.ejs', {post:post,
-	author: post.author}) %> <% })%>
-	<div class="pagination-buttons-container">
-		<% if(paginatedResults.previous) { %>
-		<a href="/?page=<%= paginatedResults.previous.page %>" class="btn btn-primary">Previous Page</a>
-		<% } %> <% if(paginatedResults.next) { %>
-		<a href="/?page=<%= paginatedResults.next.page %>" class="btn btn-primary">Next Page</a>
-		<% } %>
-	</div>
+	author: post.author}) %> <% })%> <%- include('./partials/_pagination-buttons.ejs') %>
 </div>
