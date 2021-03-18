@@ -102,6 +102,46 @@ router.post('/signup', checkNotAuthenticated, async (req, res) => {
 	}
 });
 
+//Changing location
+router.put('/settings/location/:id', checkAuthenticated, async (req, res) => {
+	const user = await User.findById(req.params.id);
+	if (user.id === req.user.id) {
+		user.location = req.body.location;
+		await user.save();
+		res.status(200);
+		res.render('users/settings', { currentClient: user, message: 'Saved New Location' });
+	} else {
+		res.status(403);
+		res.redirect(`/users/${user.username}`);
+	}
+});
+
+//Changing password
+router.put('/settings/password/:id', checkAuthenticated, async (req, res) => {
+	const user = await User.findById(req.params.id);
+	if (user.id === req.user.id) {
+		if (await bcrypt.compare(req.body.oldPassword, user.password)) {
+			const passwordInput = req.body.password;
+			const confirmPasswordInput = req.body.confirmPassword;
+
+			if (!comparePasswordInputs(passwordInput, confirmPasswordInput)) throw new Error('New Passwords do not match');
+			const hashedPassword = await bcrypt.hash(passwordInput, 10);
+			try {
+				user.password = hashedPassword;
+				await user.save();
+				res.status(200);
+				res.render('users/settings', { currentClient: user, message: 'Saved New Password', error: null });
+			} catch (error) {
+				res.status(500);
+				res.redirect('users/settings', { currentClient: user, message: null, error: error });
+			}
+		} else throw new Error('Old Password Was Entered Incorrectly');
+	} else {
+		res.status(403);
+		res.redirect(`/users/${user.username}`);
+	}
+});
+
 function comparePasswordInputs(firstInput, secondInput) {
 	return firstInput === secondInput;
 }

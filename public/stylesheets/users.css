@@ -36,10 +36,13 @@
 	cursor: pointer;
 	background: none;
 	margin-left: 0.5rem;
+	font-size: 1.5rem;
 }
 
 .search-dropdown-btn > svg {
 	vertical-align: sub;
+	height: 1em;
+	width: 1em;
 }
 
 /* User block */

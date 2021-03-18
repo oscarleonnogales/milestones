@@ -44,8 +44,9 @@ router.get('/settings', checkAuthenticated, async (req, res) => {
 	try {
 		const user = await User.findOne({ username: req.user.username });
 		res.render('users/settings', {
-			user: user,
 			currentClient: req.user,
+			message: null,
+			error: null,
 		});
 	} catch {
 		res.status(500);
