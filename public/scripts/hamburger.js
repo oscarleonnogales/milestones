@@ -1,5 +1,5 @@
 const hamburgerBtn = document.querySelector('[data-hamburger-btn]');
-const navOverlay = document.querySelector('[data-overlay]');
+const navOverlay = document.querySelector('[data-nav-overlay]');
 const navbar = document.querySelector('[data-vertical-navbar]');
 
 hamburgerBtn.addEventListener('click', () => {

@@ -3,7 +3,7 @@ const LOCAL_STORAGE_KEY = 'projectSharingSite.theme';
 const toggleCheckbox = document.querySelector('[data-toggle-theme-checkbox]');
 const themeStylesheet = document.querySelector('[data-theme-stylesheet]');
 
-setTheme(localStorage.getItem(LOCAL_STORAGE_KEY));
+setTheme(localStorage.getItem(LOCAL_STORAGE_KEY) || 'light');
 if (toggleCheckbox) {
 	toggleCheckbox.addEventListener('change', () => changeTheme());
 	setCheckbox();
