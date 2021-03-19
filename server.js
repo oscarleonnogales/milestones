@@ -72,9 +72,12 @@ mongoose.connect(process.env.DATABASE_URL, {
 	useUnifiedTopology: true,
 	useCreateIndex: true,
 });
+const db = mongoose.connection;
+db.on('error', (error) => console.log(error));
+db.once('open', () => console.log('Connected to database'));
 
 app.use('/posts', postRouter);
 app.use('/users', userRouter);
 app.use('/', indexRouter);
 
-app.listen(5000);
+app.listen(process.env.PORT || 5000);
