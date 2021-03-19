@@ -67,7 +67,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.json()); // Remove for production
 
-mongoose.connect('mongodb://localhost/blogsite', {
+mongoose.connect(process.env.DATABASE_URL, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 	useCreateIndex: true,
