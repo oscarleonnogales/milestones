@@ -1,6 +1,6 @@
 <% if(locals.currentClient && locals.currentClient.username != null) { %>
 <nav class="navbar logged-in">
-	<div>
+	<div class="welcome-user">
 		Welcome, <span><a href="/users/<%=currentClient.username%>"><%=currentClient.username%></a></span>
 	</div>
 	<div class="dropdown">

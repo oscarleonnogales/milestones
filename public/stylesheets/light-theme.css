@@ -10,7 +10,8 @@
 	--secundary-background-color: #eaecee;
 
 	/* Forms */
-	--input-background-color: #f5f5f5;
+	--input-background-color: white;
+	/* --input-background-color: #f5f5f5; */
 	--input-text-color: var(var(--main-text-color));
 }
 

@@ -4,19 +4,25 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link href="/stylesheets/no-theme.css" rel="stylesheet" type="text/css" data-theme-stylesheet />
-		<link href="/stylesheets/main.css" rel="stylesheet" type="text/css" />
 		<link href="/stylesheets/authpages.css" rel="stylesheet" type="text/css" />
 		<link href="/stylesheets/header.css" rel="stylesheet" type="text/css" />
 		<link href="/stylesheets/profile.css" rel="stylesheet" type="text/css" />
 		<link href="/stylesheets/post.css" rel="stylesheet" type="text/css" />
 		<link href="/stylesheets/users.css" rel="stylesheet" type="text/css" />
 		<link href="/stylesheets/settings.css" rel="stylesheet" type="text/css" />
+		<link href="/stylesheets/main.css" rel="stylesheet" type="text/css" />
 		<link rel="shortcut icon" href="#" />
 		<script src="/scripts/themeToggle.js" defer></script>
 		<script src="/scripts/homepage.js" defer></script>
+		<script src="/scripts/hamburger.js" defer></script>
 		<title>Project Sharing Site</title>
 	</head>
 	<body>
+		<div class="hamburger" data-hamburger-btn>
+			<div class="bar"></div>
+			<div class="bar"></div>
+			<div class="bar"></div>
+		</div>
 		<%- include('../partials/_header.ejs')%>
 		<div class="empty"></div>
 		<div id="body-container"><%- body %></div>

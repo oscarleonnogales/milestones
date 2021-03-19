@@ -31,7 +31,7 @@
 
 .authentication-form-group > label {
 	font-size: 1.25rem;
-	color: var(--light-text-color);
+	color: var(--main-text-color);
 }
 
 .form-input {
