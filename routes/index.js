@@ -6,12 +6,7 @@ const User = require('../models/user');
 
 import { checkAuthenticated, checkNotAuthenticated, getPaginatedResults } from '../middleware';
 
-//homepage with all posts
 router.get('/', getPaginatedResults(Post, {}), async (req, res) => {
-	// await Comment.deleteMany({});
-	// await Post.deleteMany({});
-	// await User.deleteMany({});
-
 	res.status(200);
 	res.render('index', {
 		currentClient: req.user,
@@ -19,13 +14,11 @@ router.get('/', getPaginatedResults(Post, {}), async (req, res) => {
 	});
 });
 
-//login page
 router.get('/login', checkNotAuthenticated, (req, res) => {
 	res.status(200);
 	res.render('users/login');
 });
 
-//signup page
 router.get('/signup', checkNotAuthenticated, (req, res) => {
 	res.status(200);
 	res.render('users/signup');
@@ -69,7 +62,6 @@ router.delete('/logout', (req, res) => {
 	res.redirect('/');
 });
 
-// 404 page
 router.get('*', (req, res) => {
 	res.status(404);
 	res.render('404');

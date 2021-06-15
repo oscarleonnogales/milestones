@@ -45,7 +45,7 @@
 	</form>
 	<div class="post__post-markdown"><%- post.sanitizedHTML %></div>
 </div>
-<form action="/posts/comments/<%= post.id %>" method="POST">
+<form action="/comments/<%= post.id %>" method="POST">
 	<label for="commentText">Comment</label>
 	<textarea name="commentText" id="commentText" class="mt-1 mb-2"></textarea>
 	<button class="btn btn-primary" type="submit">Comment</button>
@@ -71,7 +71,7 @@
 		<div class="post__comment-content">
 			<div class="post__comment-text"><%= comment.text %></div>
 			<% if (locals.currentClient && (comment.author.id === currentClient.id || currentClient.role === 'admin')) { %>
-			<form action="/posts/comments/<%= comment.id %>?_method=DELETE" method="POST" class="post__comment-delete-form">
+			<form action="/comments/<%= comment.id %>?_method=DELETE" method="POST" class="post__comment-delete-form">
 				<button type="submit" class="btn btn-danger">Delete Comment</button>
 			</form>
 			<% } %>
