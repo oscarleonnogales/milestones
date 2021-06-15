@@ -1,3 +1,5 @@
 node_modules
 .env
 futureIdeas.md
+request.rest
+.DS_Store
