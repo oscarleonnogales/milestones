@@ -13,7 +13,7 @@ Milestones is a forum site where new developers can share their completed projec
 - [Node.js](https://nodejs.org/en/)
 - [EJS](https://ejs.co/)
 
-See the package.json files in the client and server directories for a full list of dependencies.
+See the package.json file for a full list of dependencies.
 
 ## Authentication
 
